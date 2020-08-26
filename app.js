@@ -16,10 +16,9 @@ app.get('/', (req, res) => {
     res.send('Hello World from root!');
 });
 
-
-// // API path
-// const users = require('./routes/userRoutes');
-// app.use("/users", users);
+// API path
+const colisionados = require('./routes/colisionadosRoutes');
+app.use("/colisiones", colisionados);
 
 app.set('puerto', process.env.PORT || 3000);
 app.listen(app.get('puerto'), () => {
