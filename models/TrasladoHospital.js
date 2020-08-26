@@ -21,5 +21,5 @@ const TrasladoHospital = db.define("TrasladoHospital", {
     }
 });
 
-TrasladoHospital.HasOne(Afectado)
+//sTrasladoHospital.HasOne(Afectado)
 module.exports = TrasladoHospital;
