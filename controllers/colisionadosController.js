@@ -70,6 +70,7 @@ controllers.registroEvento = async(req,res) =>{
     const evento = {
         fecha : req.body.fecha,
         hora : req.body.hora,
+        incidente : req.body.incidente,
         tipo_incidente : req.body.tipo_incidente,
         descripción : req.body.descripción,
         tramo : req.body.tramo,
