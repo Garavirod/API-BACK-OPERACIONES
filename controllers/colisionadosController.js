@@ -117,12 +117,8 @@ controllers.registroDatosAmbulancia = async (req, res) => {
  * GET
  */
 
-<<<<<<< HEAD
 
  controllers.getAfectados = async (req,res)=>{
-=======
- controllers.getEventos = async (req,res)=>{
->>>>>>> 81bf2a7ceb49c79f843f9582adcb8189faa08100
      await Evento.findAll()
      .then(eve=>{
          res.json({success:true, data:eve});
