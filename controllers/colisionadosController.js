@@ -14,11 +14,13 @@ db.sync({force:false});
  */
 
 controllers.registroAfectado = async (req, res) => {
+    const _idEvento = req.params.idEvento;
     const afectado = {
         sexo: req.body.sexo,
         edad: req.body.edad,
         nombre: req.body.nombre,
         status: req.body.status,
+        fk_evento:_idEvento,
     };
 
     Afectado.create(afectado)

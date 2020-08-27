@@ -5,7 +5,7 @@ const router = express.Router();
 const colisionadosControll = require('../controllers/colisionadosController');
 
 
-router.post("/registro-afectado",colisionadosControll.registroAfectado);
+router.post("/registro-afectado/:idEvento",colisionadosControll.registroAfectado);
 router.post("/registro-trasladoHospital",colisionadosControll.registroTrasladoHospital);
 router.post("/registro-datosSeguro",colisionadosControll.registroDatosSeguro);
 router.post("/registro-evento",colisionadosControll.registroEvento);
