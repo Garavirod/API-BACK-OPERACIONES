@@ -7,10 +7,10 @@ const controllers = require('../controllers/colisionadosController');
 
 
 router.post("/registro-afectado/:idEvento",colisionadosControll.registroAfectado);
-router.post("/registro-trasladoHospital",colisionadosControll.registroTrasladoHospital);
-router.post("/registro-datosSeguro",colisionadosControll.registroDatosSeguro);
+router.post("/registro-trasladoHospital/:idEvento",colisionadosControll.registroTrasladoHospital);
+router.post("/registro-datosSeguro/:idEvento",colisionadosControll.registroDatosSeguro);
 router.post("/registro-evento",colisionadosControll.registroEvento);
-router.post("/registro-datosAmbulancia",colisionadosControll.registroDatosAmbulancia);
+router.post("/registro-datosAmbulancia/:idEvento",colisionadosControll.registroDatosAmbulancia);
 router.get("/eventos", colisionadosControll.getEventos);
 router.get("/afectados",controllers.getAfectados);
 router.get("/datoseguros", colisionadosControll.getDatosSeguro);

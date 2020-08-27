@@ -34,11 +34,12 @@ controllers.registroAfectado = async (req, res) => {
 };
 
 
-controllers.registroTrasladoHospital = async (req, res) => {
+controllers.registroTrasladoHospital = async (req, res) => {    
     const trasladoHospital = {
         idAfectado: req.body.idAfectado,
         nombreHospital: req.body.nombreHospital,
         paseMedico: req.body.paseMedico,
+        fk_afectado : req.params.idEvento
     };
 
     TrasladoHospital.create(trasladoHospital)
@@ -50,8 +51,9 @@ controllers.registroTrasladoHospital = async (req, res) => {
             res.json({ success: false, message: err });
         })
 };
-
+// N-M
 controllers.registroDatosSeguro = async (req, res) => {
+    const evento = await Evento.findOne({where:{id:req.params.idEvento}});    
     const datosSeguro = {
         horaArribo: req.body.horaArribo,
         tiempoRespuesta: req.body.tiempoRespuesta,
@@ -59,11 +61,11 @@ controllers.registroDatosSeguro = async (req, res) => {
         corresponde: req.body.corresponde,
         nombreAjustador: req.body.nombreAjustador,
         unidadSeguro: req.body.unidadSeguro,
-
     };
 
     DatosSeguro.create(datosSeguro)
         .then(DatosSegur => {
+            DatosSegur.addEventos(evento);
             res.json({ success: true, data: DatosSegur });
         })
         .catch(err => {
@@ -94,8 +96,9 @@ controllers.registroEvento = async (req, res) => {
             res.json({ success: false, message: err });
         })
 };
-
+//N-M
 controllers.registroDatosAmbulancia = async (req, res) => {
+    const evento = await Evento.findOne({where:{id:req.params}});
     const datosAmbulancia = {
         tiempoLlegada: req.body.tiempoLlegada,
         tiempoRespuesta: req.body.tiempoRespuesta,
@@ -108,6 +111,7 @@ controllers.registroDatosAmbulancia = async (req, res) => {
 
     DatosAmbulancia.create(datosAmbulancia)
         .then(DatosAmbulanci => {
+            DatosAmbulanci.addEventos(evento);
             res.json({ success: true, data: DatosAmbulanci });
         })
         .catch(err => {
