@@ -75,10 +75,11 @@ controllers.registroEvento = async (req, res) => {
         fecha: req.body.fecha,
         hora: req.body.hora,
         tipo_incidente: req.body.tipo_incidente,
+        incidente: req.body.incidente,
         descripcion: req.body.descripcion,
         tramo: req.body.tramo,
-        idOperador: req.body.idOperador,
-        folioBitacora: req.body.folioBitacora,
+        operador: req.body.operador,
+        bitacora: req.body.bitacora,
 
     };
 
