@@ -8,10 +8,10 @@ const DatosSeguro = db.define("DatosSeguro",{
         autoIncrement: true
     },
     horaArribo: {
-        type: sequelize.DATE
+        type: sequelize.TIME
     },
     tiempoRespuesta: {
-        type: sequelize.DATE
+        type: sequelize.TIME
     },
     seguro: {
         type: sequelize.STRING
