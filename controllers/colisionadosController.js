@@ -6,8 +6,8 @@ const Evento = require('../models/Evento');
 const db = require('../config/db');
 const controllers = {}
 
-
-db.sync();
+//Borra y los datos y tablas al correr el server
+db.sync({force:true});
 
 /**
  * POST
@@ -117,8 +117,12 @@ controllers.registroDatosAmbulancia = async (req, res) => {
  * GET
  */
 
+<<<<<<< HEAD
 
  controllers.getAfectados = async (req,res)=>{
+=======
+ controllers.getEventos = async (req,res)=>{
+>>>>>>> 81bf2a7ceb49c79f843f9582adcb8189faa08100
      await Evento.findAll()
      .then(eve=>{
          res.json({success:true, data:eve});
