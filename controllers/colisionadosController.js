@@ -70,6 +70,7 @@ controllers.registroDatosSeguro = async (req, res) => {
         })
 };
 
+<<<<<<< HEAD
 controllers.registroEvento = async (req, res) => {
     const Evento = {
         fecha: req.body.fecha,
@@ -80,6 +81,19 @@ controllers.registroEvento = async (req, res) => {
         idOperador: req.body.idOperador,
         folioBitacora: req.body.folioBitacora,
 
+=======
+controllers.registroEvento = async(req,res) =>{
+    const evento = {
+        fecha : req.body.fecha,
+        hora : req.body.hora,
+        incidente : req.body.incidente,
+        tipo_incidente : req.body.tipo_incidente,
+        descripción : req.body.descripción,
+        tramo : req.body.tramo,
+        idOperador : req.body.idOperador,
+        folioBitacora : req.body.folioBitacora,
+        
+>>>>>>> 099928b6ed39bb366bb2e60c4b7908ddef39c200
     };
 
     Evento.create(Evento)
