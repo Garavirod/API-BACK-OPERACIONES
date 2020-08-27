@@ -35,7 +35,7 @@ const DatosSeguro = db.define("DatosSeguro",{
 // N - M 
 
 DatosSeguro.belongsToMany(
-    Evento,
+    Evento, //addEventos getEventos setEventos..
     {
         through : 'Seguro_Evento',
         onDelete:'cascade', 

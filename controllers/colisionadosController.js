@@ -106,7 +106,7 @@ controllers.registroDatosAmbulancia = async (req, res) => {
         ecoPlaca: req.body.ecoPlaca,
         paramedico: req.body.paramedico,
         diagnostico: req.body.diagnostico,
-
+        fk_afectado: req.body.idAfectado,
     };
 
     DatosAmbulancia.create(datosAmbulancia)
