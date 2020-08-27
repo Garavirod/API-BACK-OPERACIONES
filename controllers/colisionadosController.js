@@ -201,6 +201,51 @@ controllers.borraAfectado = async (req,res)=>{
     })
 }
 
+controllers.borraTraslado = async (req,res)=>{
+    const id_traslado = req.params.idTraslado;
+    await TrasladoHospital.destroy({ 
+        where : {
+            id: id_traslado
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.borraSeguro = async (req,res)=>{
+    const id_seguro = req.params.idSeguro;
+    await DatosSeguro.destroy({ 
+        where : {
+            id: id_seguro
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.borraAmbulancia = async (req,res)=>{
+    const id_ambulancia = req.params.idAmbulancia;
+    await DatosAmbulancia.destroy({ 
+        where : {
+            id: id_ambulancia
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
 
 
 
