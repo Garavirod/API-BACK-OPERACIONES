@@ -14,14 +14,14 @@ db.sync();
  */
 
 controllers.registroAfectado = async (req, res) => {
-    const afectado = {
+    const Afectado = {
         sexo: req.body.sexo,
         edad: req.body.edad,
         nombre: req.body.nombre,
         status: req.body.status,
     };
 
-    Afectado.create(afectado)
+    Afectado.create(Afectado)
         .then(afe => {
             res.json({ success: true, data: afe });
         })
@@ -70,7 +70,6 @@ controllers.registroDatosSeguro = async (req, res) => {
         })
 };
 
-<<<<<<< HEAD
 controllers.registroEvento = async (req, res) => {
     const Evento = {
         fecha: req.body.fecha,
@@ -81,19 +80,6 @@ controllers.registroEvento = async (req, res) => {
         idOperador: req.body.idOperador,
         folioBitacora: req.body.folioBitacora,
 
-=======
-controllers.registroEvento = async(req,res) =>{
-    const evento = {
-        fecha : req.body.fecha,
-        hora : req.body.hora,
-        incidente : req.body.incidente,
-        tipo_incidente : req.body.tipo_incidente,
-        descripción : req.body.descripción,
-        tramo : req.body.tramo,
-        idOperador : req.body.idOperador,
-        folioBitacora : req.body.folioBitacora,
-        
->>>>>>> 099928b6ed39bb366bb2e60c4b7908ddef39c200
     };
 
     Evento.create(Evento)
@@ -131,8 +117,9 @@ controllers.registroDatosAmbulancia = async (req, res) => {
  * GET
  */
 
- controllers.getEventos = async (req,res)=>{
-     Evento.findAll()
+
+ controllers.getAfectados = async (req,res)=>{
+     await Evento.findAll()
      .then(eve=>{
          res.json({success:true, data:eve});
      })
@@ -140,6 +127,50 @@ controllers.registroDatosAmbulancia = async (req, res) => {
          res.json({success:false, message:err});
      })
  }
+
+ controllers.getTraslados = async (req,res)=>{
+    await Traslado.findAll()
+    .then(tras=>{
+        res.json({success:true, data:tras});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.getDatosSeguro = async (req,res)=>{
+    await DatosSeguro.findAll()
+    .then(seg=>{
+        res.json({success:true, data:seg});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.getDatosAmbulancia = async (req,res)=>{
+    await DatosAmbulancia.findAll()
+    .then(amb=>{
+        res.json({success:true, data:amb});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.getEventos = async (req,res)=>{
+    await Evento.findAll()
+    .then(eve=>{
+        res.json({success:true, data:eve});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+
+
+
 
 
 module.exports = controllers;
