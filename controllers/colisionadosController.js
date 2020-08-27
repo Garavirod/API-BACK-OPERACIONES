@@ -171,6 +171,36 @@ controllers.getEventos = async (req,res)=>{
     })
 }
 
+controllers.borraEvento = async (req,res)=>{
+    const id_event = req.params.idEvento;
+    await Evento.destroy({ 
+        where : {
+            id: id_event
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.borraAfectado = async (req,res)=>{
+    const id_afectado = req.params.idAfectado;
+    await Afectado.destroy({ 
+        where : {
+            id: id_afectado
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
 
 
 

@@ -13,5 +13,7 @@ router.post("/registro-evento",colisionadosControll.registroEvento);
 router.post("/registro-datosAmbulancia",colisionadosControll.registroDatosAmbulancia);
 router.get("/eventos", colisionadosControll.getEventos);
 router.get("/afectados",controllers.getAfectados);
+router.delete("/borra-evento/:idEvento",controllers.borraEvento);
+router.delete("/borra-afectado/:idAfectado",controllers.borraAfectado);
 
 module.exports = router;
