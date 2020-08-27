@@ -1,5 +1,6 @@
 const sequelize = require('sequelize');
 const db = require('../config/db');
+const Afectado = require('../models/Afectado');
 
 const Evento = db.define("Evento", {
     id: {
@@ -36,5 +37,14 @@ const Evento = db.define("Evento", {
 
 });
 
-// Evento.HasMany(Afectado);
+Evento.hasMany(
+
+    Afectado,
+    {
+        as : "asociado",
+        foreignKey : 'fk_evento',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
 module.exports = Evento;

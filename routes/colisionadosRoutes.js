@@ -10,6 +10,7 @@ router.post("/registro-trasladoHospital",colisionadosControll.registroTrasladoHo
 router.post("/registro-datosSeguro",colisionadosControll.registroDatosSeguro);
 router.post("/registro-evento",colisionadosControll.registroEvento);
 router.post("/registro-datosAmbulancia",colisionadosControll.registroDatosAmbulancia);
+router.get("/eventos", colisionadosControll.getEventos);
 
 
 module.exports = router;
