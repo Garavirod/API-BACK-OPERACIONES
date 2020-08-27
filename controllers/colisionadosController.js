@@ -119,9 +119,9 @@ controllers.registroDatosAmbulancia = async (req, res) => {
 
 
  controllers.getAfectados = async (req,res)=>{
-     await Evento.findAll()
-     .then(eve=>{
-         res.json({success:true, data:eve});
+     await Afectado.findAll()
+     .then(afe=>{
+         res.json({success:true, data:afe});
      })
      .catch(err=>{
          res.json({success:false, message:err});
