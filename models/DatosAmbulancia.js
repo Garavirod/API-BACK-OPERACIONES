@@ -11,10 +11,10 @@ const DatosAmbulancia = db.define("DatosAmbulancia",{
     },
 
     tiempoLLegada: {
-        type: sequelize.DATE
+        type: sequelize.TIME
     },
     tiempoRespuesta: {
-        type: sequelize.DATE
+        type: sequelize.TIME
     },
     ambulancia: {
         type: sequelize.STRING
