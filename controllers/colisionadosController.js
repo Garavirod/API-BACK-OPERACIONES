@@ -7,21 +7,21 @@ const db = require('../config/db');
 const controllers = {}
 
 //Borra y los datos y tablas al correr el server
-db.sync({force:true});
+db.sync({force:false});
 
 /**
  * POST
  */
 
 controllers.registroAfectado = async (req, res) => {
-    const Afectado = {
+    const afectado = {
         sexo: req.body.sexo,
         edad: req.body.edad,
         nombre: req.body.nombre,
         status: req.body.status,
     };
 
-    Afectado.create(Afectado)
+    Afectado.create(afectado)
         .then(afe => {
             res.json({ success: true, data: afe });
         })
@@ -33,13 +33,13 @@ controllers.registroAfectado = async (req, res) => {
 
 
 controllers.registroTrasladoHospital = async (req, res) => {
-    const TrasladoHospital = {
+    const trasladoHospital = {
         idAfectado: req.body.idAfectado,
         nombreHospital: req.body.nombreHospital,
         paseMedico: req.body.paseMedico,
     };
 
-    TrasladoHospital.create(TrasladoHospital)
+    TrasladoHospital.create(trasladoHospital)
         .then(TrasladoH => {
             res.json({ success: true, data: TrasladoH });
         })
@@ -50,7 +50,7 @@ controllers.registroTrasladoHospital = async (req, res) => {
 };
 
 controllers.registroDatosSeguro = async (req, res) => {
-    const DatosSeguro = {
+    const datosSeguro = {
         horaArribo: req.body.horaArribo,
         tiempoRespuesta: req.body.tiempoRespuesta,
         seguro: req.body.seguro,
@@ -60,7 +60,7 @@ controllers.registroDatosSeguro = async (req, res) => {
 
     };
 
-    DatosSeguro.create(DatosSeguro)
+    DatosSeguro.create(datosSeguro)
         .then(DatosSegur => {
             res.json({ success: true, data: DatosSegur });
         })
@@ -71,18 +71,18 @@ controllers.registroDatosSeguro = async (req, res) => {
 };
 
 controllers.registroEvento = async (req, res) => {
-    const Evento = {
+    const evento = {
         fecha: req.body.fecha,
         hora: req.body.hora,
         tipo_incidente: req.body.tipo_incidente,
-        descripción: req.body.descripción,
+        descripcion: req.body.descripcion,
         tramo: req.body.tramo,
         idOperador: req.body.idOperador,
         folioBitacora: req.body.folioBitacora,
 
     };
 
-    Evento.create(Evento)
+    Evento.create(evento)
         .then(Event => {
             res.json({ success: true, data: Event });
         })
@@ -93,7 +93,7 @@ controllers.registroEvento = async (req, res) => {
 };
 
 controllers.registroDatosAmbulancia = async (req, res) => {
-    const DatosAmbulancia = {
+    const datosAmbulancia = {
         tiempoLlegada: req.body.tiempoLlegada,
         tiempoRespuesta: req.body.tiempoRespuesta,
         ambulancia: req.body.ambulancia,
@@ -103,7 +103,7 @@ controllers.registroDatosAmbulancia = async (req, res) => {
 
     };
 
-    DatosAmbulancia.create(DatosAmbulancia)
+    DatosAmbulancia.create(datosAmbulancia)
         .then(DatosAmbulanci => {
             res.json({ success: true, data: DatosAmbulanci });
         })
