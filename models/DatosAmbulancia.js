@@ -1,6 +1,7 @@
 const sequelize = require('sequelize');
 const db = require('../config/db');
-const { SqlError } = require('mariadb');
+const Afectado = require('./Afectado');
+const Evento = require('./Evento');
 
 const DatosAmbulancia = db.define("DatosAmbulancia",{
     id: {
@@ -32,5 +33,27 @@ const DatosAmbulancia = db.define("DatosAmbulancia",{
         defaultValue: sequelize.NOW
     }
 });
+
+// 1 - 1
+DatosAmbulancia.belongsTo(
+    Afectado,
+    {
+        as :"afectado",
+        foreignKey : 'fk_afectado',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
+// N - M 
+
+DatosAmbulancia.belongsToMany(
+    Evento,
+    {
+        through : 'Evento_Ambulancia',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
 
 module.exports = DatosAmbulancia;

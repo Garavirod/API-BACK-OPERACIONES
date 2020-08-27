@@ -21,5 +21,13 @@ const TrasladoHospital = db.define("TrasladoHospital", {
     }
 });
 
-//sTrasladoHospital.HasOne(Afectado)
+// 1 - M 
+TrasladoHospital.belongsTo(
+    Afectado,{
+        as : 'traslada',
+        foreignKey : 'fk_afectado',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
 module.exports = TrasladoHospital;

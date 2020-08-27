@@ -36,9 +36,8 @@ const Evento = db.define("Evento", {
     }
 
 });
-
+// 1 - M
 Evento.hasMany(
-
     Afectado,
     {
         as : "asociado",

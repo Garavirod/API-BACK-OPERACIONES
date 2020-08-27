@@ -1,5 +1,6 @@
 const sequelize = require('sequelize');
 const db = require('../config/db');
+const Evento = require('./Evento');
 
 const DatosSeguro = db.define("DatosSeguro",{
     id: {
@@ -8,10 +9,10 @@ const DatosSeguro = db.define("DatosSeguro",{
         autoIncrement: true
     },
     horaArribo: {
-        type: sequelize.DATE
+        type: sequelize.TIME
     },
     tiempoRespuesta: {
-        type: sequelize.DATE
+        type: sequelize.TIME
     },
     seguro: {
         type: sequelize.STRING
@@ -30,5 +31,17 @@ const DatosSeguro = db.define("DatosSeguro",{
         defaultValue: sequelize.NOW
     }
 });
+
+// N - M 
+
+DatosSeguro.belongsToMany(
+    Evento,
+    {
+        through : 'Seguro_Evento',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
 
 module.exports = DatosSeguro;
