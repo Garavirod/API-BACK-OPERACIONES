@@ -14,7 +14,7 @@ const Evento = db.define("Evento", {
     },
     hora :{
         type:sequelize.TIME,
-        defaultValue: sequelize.TIME
+        //defaultValue: sequelize.NOW
     },
     tipo_incidente :{
         type: sequelize.BOOLEAN,    

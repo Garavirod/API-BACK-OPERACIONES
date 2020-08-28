@@ -98,9 +98,9 @@ controllers.registroEvento = async (req, res) => {
 };
 //N-M
 controllers.registroDatosAmbulancia = async (req, res) => {
-    const evento = await Evento.findOne({where:{id:req.params}});
+    const evento = await Evento.findOne({where:{id:req.params.idEvento}});
     const datosAmbulancia = {
-        tiempoLlegada: req.body.tiempoLlegada,
+        tiempoLLegada: req.body.tiempoLLegada,
         tiempoRespuesta: req.body.tiempoRespuesta,
         ambulancia: req.body.ambulancia,
         ecoPlaca: req.body.ecoPlaca,
