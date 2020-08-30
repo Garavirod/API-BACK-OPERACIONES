@@ -136,7 +136,7 @@ controllers.registroDatosAmbulancia = async (req, res) => {
  }
 
  controllers.getTraslados = async (req,res)=>{
-    await Traslado.findAll()
+    await TrasladoHospital.findAll()
     .then(tras=>{
         res.json({success:true, data:tras});
     })
