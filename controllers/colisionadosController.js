@@ -6,7 +6,7 @@ const Evento = require('../models/Evento');
 const db = require('../config/db');
 const controllers = {}
 
-//Borra y los datos y tablas al correr el server
+//Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
 
 /**
