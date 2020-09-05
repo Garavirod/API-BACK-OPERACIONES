@@ -27,8 +27,8 @@ app.get('/', (req, res) => {
 });
 
 // // API path
- const colisionados = require('./routes/colisionadosRoutes');
- app.use("/colisiones", colisionados);
+ const colisionados = require('./routes/lesionadosRoutes');
+ app.use("/lesionados", colisionados);
 
 
 app.set('puerto', process.env.PORT || 5000);
