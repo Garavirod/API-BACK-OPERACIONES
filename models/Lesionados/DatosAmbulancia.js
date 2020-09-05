@@ -1,5 +1,5 @@
 const sequelize = require('sequelize');
-const db = require('../config/db');
+const db = require('../../config/db');
 const Afectado = require('./Afectado');
 const Evento = require('./Evento');
 

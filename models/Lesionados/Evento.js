@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
-const db = require('../config/db');
-const Afectado = require('../models/Afectado');
+const db = require('../../config/db');
+const Afectado = require('../Lesionados/Afectado');
 
 const Evento = db.define("Evento", {
     id: {
