@@ -151,14 +151,15 @@ controllers.registroDatosAmbulancia = async (req, res) => {
 }
 
 controllers.getDatosSeguro = async (req,res)=>{
-    await Evento.findByPk(req.params.idEvento,{
-        include:[
-            {
-                model:DatosSeguro,
-                as : 'Datos del seguro',
-                // attributes: ["id", "title", "description"],
-            }
-        ]
+    await DatosSeguro.findAll({
+        include:[ 
+            {   model:Evento, 
+                where:
+                {
+                    id:req.params.idEvento
+                }
+            }           
+        ],            
     })
     .then(seg=>{
         res.json({success:true, data:seg});

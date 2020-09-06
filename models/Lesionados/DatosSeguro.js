@@ -43,5 +43,14 @@ DatosSeguro.belongsToMany(
     }
 );
 
+Evento.belongsToMany(
+    DatosSeguro, //addEventos getEventos setEventos..
+    {
+        through : 'Seguro_Evento',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
 
 module.exports = DatosSeguro;

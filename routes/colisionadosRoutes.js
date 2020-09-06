@@ -11,7 +11,7 @@ router.post('/datos-colision',controllers.addColision);
 // GET
 router.get('/colisiones-list',controllers.getColisiones);
 router.get('/automovil-list/:idColision',controllers.getAutomovil);
-// router.get('/seguro-list/:idColision',controllers.getSeguro);
+router.get('/seguro-list/:idColision',controllers.getSeguro);
 router.get('/lesionados-list/:idColision',controllers.getLesionados);
 // DELETE
 router.delete('/delete-colision/:idColision',controllers.deleteColision);

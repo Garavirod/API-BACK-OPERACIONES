@@ -125,6 +125,26 @@ controllers.getLesionados = async (req,res) =>{
      })
 };
 
+
+controllers.getSeguro = async (req,res) =>{
+    await DatosSeguroColision.findAll({
+        include:[ 
+            {   model:Colision, 
+                where:
+                {
+                    id:req.params.idColision
+                }
+            }           
+        ],            
+    })
+    .then(obj=>{
+        res.json({success:true, data:obj});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+};
+
 // DELETE
 
 controllers.deleteColision = async (req,res)=>{

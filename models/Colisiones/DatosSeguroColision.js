@@ -26,8 +26,20 @@ const DatosSeguroColision = db.define('DatosSeguroColision',{
     }, 
 });
 
+// Relations 
+
 DatosSeguroColision.belongsToMany(
     Colision, //addColisions getColisions setColisions..
+    {
+        through : 'seguro_colision',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
+
+Colision.belongsToMany(
+    DatosSeguroColision, //addColisions getColisions setColisions..
     {
         through : 'seguro_colision',
         onDelete:'cascade', 
