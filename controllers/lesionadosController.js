@@ -33,13 +33,11 @@ controllers.registroAfectado = async (req, res) => {
         })
 };
 
-
 controllers.registroTrasladoHospital = async (req, res) => {    
-    const trasladoHospital = {
-        idAfectado: req.body.idAfectado,
+    const trasladoHospital = {        
         nombreHospital: req.body.nombreHospital,
         paseMedico: req.body.paseMedico,
-        fk_afectado : req.params.idEvento
+        fk_afectado : req.params.idAfectado
     };
 
     TrasladoHospital.create(trasladoHospital)
@@ -138,16 +136,24 @@ controllers.registroDatosAmbulancia = async (req, res) => {
      })
  }
 
- controllers.getTraslados = async (req,res)=>{
-    await TrasladoHospital.findAll({where:{
-        fk_afectado: req.params.idEvento
-     }})
-    .then(tras=>{
-        res.json({success:true, data:tras});
+ 
+ controllers.getTraslados = async (req,res)=>{    
+    await TrasladoHospital.findAll({
+        include:[
+            {
+                model:Afectado,
+                where: {
+                    fk_evento:req.params.idEvento
+                }
+            }
+        ]           
+    })
+    .then(seg=>{
+        res.json({success:true, data:seg});
     })
     .catch(err=>{
         res.json({success:false, message:err});
-    })
+    })   
 }
 
 controllers.getDatosSeguro = async (req,res)=>{
@@ -157,7 +163,8 @@ controllers.getDatosSeguro = async (req,res)=>{
                 where:
                 {
                     id:req.params.idEvento
-                }
+                },
+                attributes:["id"]
             }           
         ],            
     })
@@ -170,9 +177,19 @@ controllers.getDatosSeguro = async (req,res)=>{
 }
 
 controllers.getDatosAmbulancia = async (req,res)=>{
-    await DatosAmbulancia.findAll()
-    .then(amb=>{
-        res.json({success:true, data:amb});
+    await DatosAmbulancia.findAll({
+        include:[ 
+            {   model:Evento, 
+                where:
+                {
+                    id:req.params.idEvento
+                },
+                attributes:["id"]
+            }           
+        ],            
+    })
+    .then(obj=>{
+        res.json({success:true, data:obj});
     })
     .catch(err=>{
         res.json({success:false, message:err});

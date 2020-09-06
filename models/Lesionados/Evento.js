@@ -46,4 +46,13 @@ Evento.hasMany(
         onUpdate:'cascade',
     }
 );
+
+Afectado.belongsTo(
+    Evento,{
+        as : "pertenece",
+        foreignKey : 'fk_evento',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
 module.exports = Evento;

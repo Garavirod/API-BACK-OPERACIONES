@@ -56,4 +56,14 @@ DatosAmbulancia.belongsToMany(
     }
 );
 
+
+Evento.belongsToMany(
+    DatosAmbulancia,
+    {
+        through : 'Evento_Ambulancia',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
 module.exports = DatosAmbulancia;

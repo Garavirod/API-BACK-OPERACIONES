@@ -1,7 +1,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
 const Afectado = require('../Lesionados/Afectado');
-const { HasOne } = require('sequelize');
+
 
 const TrasladoHospital = db.define("TrasladoHospital", {
     id: {
@@ -23,11 +23,20 @@ const TrasladoHospital = db.define("TrasladoHospital", {
 
 // 1 - M 
 TrasladoHospital.belongsTo(
-    Afectado,{
-        as : 'traslada',
+    Afectado,{        
         foreignKey : 'fk_afectado',
         onDelete:'cascade', 
         onUpdate:'cascade',
     }
 );
+
+
+Afectado.hasOne(
+    TrasladoHospital,{        
+        foreignKey : 'fk_afectado',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
 module.exports = TrasladoHospital;
