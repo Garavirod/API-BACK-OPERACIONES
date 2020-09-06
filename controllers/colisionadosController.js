@@ -11,12 +11,12 @@ db.sync({force:false});
 // POST
 controllers.addColision = async(req,res)=>{
     const _colision = {
-        sentido: req.params.sentido,
-        motivo: req.params.motivo,
-        interseccion: req.params.interseccion,
-        colonia : req.params.colonia,
-        fecha:req.params.fecha,
-        hora: req.params.hora 
+        sentido: req.body.sentido,
+        motivo: req.body.motivo,
+        interseccion: req.body.interseccion,
+        colonia : req.body.colonia,
+        fecha:req.body.fecha,
+        hora: req.body.hora 
     };
 
     Colision.create(_colision)
@@ -33,10 +33,10 @@ controllers.addColision = async(req,res)=>{
 controllers.addSeguro = async(req,res)=>{
     const _colision = await Colision.findOne({where:{id:req.params.idColision}});
     const _datosSeguro = {
-        nombre_seguro: req.params.nombre_seguro,
-        tipo_seguro: req.params.tipo_seguro,
-        paga: req.params.paga,
-        comentarios : req.params.comentarios,
+        nombre_seguro: req.body.nombre_seguro,
+        tipo_seguro: req.body.tipo_seguro,
+        paga: req.body.paga,
+        comentarios : req.body.comentarios,
     };
 
     DatosSeguroColision.create(_datosSeguro)
@@ -52,8 +52,8 @@ controllers.addSeguro = async(req,res)=>{
 
 controllers.addLesionado = async(req,res)=>{    
     const _datosLesionado = {
-        sexo: req.params.sexo,
-        tipo_lesionado: req.params.tipo_lesionado,     
+        sexo: req.body.sexo,
+        tipo_lesionado: req.body.tipo_lesionado,     
         fk_colision: req.params.idColision,
     };
 
@@ -70,11 +70,11 @@ controllers.addLesionado = async(req,res)=>{
 
 controllers.addAutomovil = async(req,res)=>{    
     const _datosAutomovil = {
-        sexo_contuctor: req.params.sexo,
-        marca: req.params.tipo_lesionado,
-        submarca:req.params.submarca,
-        color: req.params.color,
-        placa: req.params.placa,     
+        sexo_contuctor: req.body.sexo,
+        marca: req.body.tipo_lesionado,
+        submarca:req.body.submarca,
+        color: req.body.color,
+        placa: req.body.placa,     
         fk_colision: req.params.idColision
     };
 
