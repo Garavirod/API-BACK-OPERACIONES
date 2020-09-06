@@ -1,6 +1,5 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
-const Colision = require('./Colision');
 
 
 const Lesionado = db.define('Lesionado',{
@@ -18,14 +17,5 @@ const Lesionado = db.define('Lesionado',{
     },   
 });
 
-Lesionado.belongsTo(
-    Colision,
-    {
-        as : "pertenece",
-        foreignKey : 'fk_colision',
-        onDelete:'cascade', 
-        onUpdate:'cascade',
-    }
-);
 
 module.exports = Lesionado;

@@ -30,14 +30,4 @@ const DatosAutomovil = db.define('DatosAutomovil',{
     },
 });
 
-DatosAutomovil.belongsTo(
-    Colision,
-    {
-        as : "asociado",
-        foreignKey : 'fk_colision',
-        onDelete:'cascade', 
-        onUpdate:'cascade',
-    }
-);
-
 module.exports = DatosAutomovil;

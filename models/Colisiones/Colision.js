@@ -1,5 +1,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
+const Lesionado = require('./Lesionado');
+const DatosAutomovil = require('./DatosAutomovil');
 
 const Colision = db.define('Colision',{
     id: {
@@ -31,5 +33,29 @@ const Colision = db.define('Colision',{
         //defaultValue: sequelize.NOW
     },
 });
+
+// Relations
+
+Colision.hasMany(
+    Lesionado,
+    {
+        as : "pertenece",
+        foreignKey : 'fk_colision',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
+Colision.hasMany(
+    DatosAutomovil,
+    {
+        as : "asociado",
+        foreignKey : 'fk_colision',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
+
 
 module.exports = Colision;
