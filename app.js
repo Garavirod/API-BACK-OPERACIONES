@@ -23,9 +23,9 @@ sequelize.authenticate()
 
 
 // // Root
-// app.get('/', (req, res) => {
-//     res.send('Hello World from root!');
-// });
+app.get('/', (req, res) => {
+    res.send('API WORKS!');
+});
 
 // // API path
  const lesionados = require('./routes/lesionadosRoutes');
@@ -35,10 +35,10 @@ sequelize.authenticate()
 
 
 // Static
-app.use(express.static(path.join(__dirname, 'public'))); //path/public
-app.get('/*', function(req, res, next) {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, 'public'))); //path/public
+// app.get('/*', function(req, res, next) {
+//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 
 
