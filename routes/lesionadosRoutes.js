@@ -5,7 +5,7 @@ const controllers = require('../controllers/lesionadosController');
 
 
 router.post("/registro-afectado/:idEvento",controllers.registroAfectado);
-router.post("/registro-trasladoHospital/:idEvento",controllers.registroTrasladoHospital);
+router.post("/registro-trasladoHospital/:idAfectado",controllers.registroTrasladoHospital);
 router.post("/registro-datosSeguro/:idEvento",controllers.registroDatosSeguro);
 router.post("/registro-evento",controllers.registroEvento);
 router.post("/registro-datosAmbulancia/:idEvento",controllers.registroDatosAmbulancia);
