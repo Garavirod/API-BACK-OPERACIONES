@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const sequelize = require('./config/db');
+const path = require('path');
 
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
@@ -21,16 +22,24 @@ sequelize.authenticate()
     });
 
 
-// Root
-app.get('/', (req, res) => {
-    res.send('Hello World from root!');
-});
+// // Root
+// app.get('/', (req, res) => {
+//     res.send('Hello World from root!');
+// });
 
 // // API path
  const lesionados = require('./routes/lesionadosRoutes');
  const colisiones = require('./routes/colisionadosRoutes');
  app.use("/lesionados", lesionados); //Rutas para lesionados
  app.use("/colisiones", colisiones); //Ritas para colisiones
+
+
+// Static
+app.use(express.static(path.join(__dirname, 'public'))); //path/public
+app.get('/*', function(req, res, next) {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 
 
 app.set('puerto', process.env.PORT || 5000);
