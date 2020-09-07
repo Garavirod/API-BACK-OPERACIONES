@@ -136,7 +136,7 @@ controllers.registroDatosAmbulancia = async (req, res) => {
      })
  }
 
- 
+
  controllers.getTraslados = async (req,res)=>{    
     await TrasladoHospital.findAll({
         include:[
@@ -144,7 +144,8 @@ controllers.registroDatosAmbulancia = async (req, res) => {
                 model:Afectado,
                 where: {
                     fk_evento:req.params.idEvento
-                }
+                },
+                attributes:["id"],                
             }
         ]           
     })
