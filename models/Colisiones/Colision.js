@@ -38,8 +38,7 @@ const Colision = db.define('Colision',{
 
 Colision.hasMany(
     Lesionado,
-    {
-        as : "pertenece",
+    {        
         foreignKey : 'fk_colision',
         onDelete:'cascade', 
         onUpdate:'cascade',
@@ -49,7 +48,7 @@ Colision.hasMany(
 Colision.hasMany(
     DatosAutomovil,
     {
-        as : "asociado",
+        
         foreignKey : 'fk_colision',
         onDelete:'cascade', 
         onUpdate:'cascade',
