@@ -30,8 +30,10 @@ app.get('/', (req, res) => {
 // // API path
  const lesionados = require('./routes/lesionadosRoutes');
  const colisiones = require('./routes/colisionadosRoutes');
+ const user = require("./routes/userRoutes");
  app.use("/lesionados", lesionados); //Rutas para lesionados
  app.use("/colisiones", colisiones); //Ritas para colisiones
+ app.use("/users", user);
 
 
 // Static
@@ -39,7 +41,6 @@ app.get('/', (req, res) => {
 // app.get('/*', function(req, res, next) {
 //     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 // });
-
 
 
 app.set('puerto', process.env.PORT || 5000);
