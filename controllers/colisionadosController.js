@@ -193,7 +193,7 @@ controllers.deleteSeguro = async( req, res) =>{
     })
 };
 controllers.deleteAutomovil = async( req, res) =>{
-    const id_Automovil = req.params.idAutomovil;
+    const id_Automovil = req.params.idSeguro;
     await DatosAutomovil.destroy(
         {
             where:{id:id_Automovil}
