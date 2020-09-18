@@ -1,6 +1,5 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
-const Colision = require('./Colision');
 
 
 const DatosAutomovil = db.define('DatosAutomovil',{
@@ -9,7 +8,7 @@ const DatosAutomovil = db.define('DatosAutomovil',{
         primaryKey: true,
         autoIncrement: true
     },
-    sexo_conductor: {
+    sexo_contuctor: {
         type: sequelize.STRING
     },
 

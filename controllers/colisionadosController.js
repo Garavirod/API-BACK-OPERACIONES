@@ -71,11 +71,11 @@ controllers.addLesionado = async(req,res)=>{
 controllers.addAutomovil = async(req,res)=>{    
     const _datosAutomovil = {
         sexo_contuctor: req.body.sexo,
-        marca: req.body.tipo_lesionado,
+        marca: req.body.marca,
         submarca:req.body.submarca,
         color: req.body.color,
         placa: req.body.placa,     
-        fk_colision: req.params.idColision
+        fk_colision: req.params.idColision,
     };
 
     DatosAutomovil.create(_datosAutomovil)
@@ -84,7 +84,7 @@ controllers.addAutomovil = async(req,res)=>{
     })
     .catch(err=>{
         console.log("ERROR >:", err);
-            res.json({ success: false, message: err });
+        res.json({ success: false, message: err });
     });
 };
 
