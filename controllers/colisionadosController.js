@@ -162,4 +162,19 @@ controllers.deleteColision = async (req,res)=>{
     })
 }
 
+controllers.deleteLesionado = async( req, res) =>{
+    const id_lesionado = req.params.idlesionado;
+    await Lesionado.destroy(
+        {
+            where:{id:id_lesionado}
+        }
+    )
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+};
+
 module.exports = controllers;
