@@ -16,5 +16,6 @@ router.get('/lesionados-list/:idColision',controllers.getLesionados);
 // DELETE
 router.delete('/delete-colision/:idColision',controllers.deleteColision);
 router.delete('/delete-lesionada/:idlesionado',controllers.deleteLesionado);
+router.delete('/delete-seguro/:idSeguro',controllers.deleteSeguro)
 
 module.exports= router;

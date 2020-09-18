@@ -177,4 +177,21 @@ controllers.deleteLesionado = async( req, res) =>{
     })
 };
 
+
+controllers.deleteSeguro = async( req, res) =>{
+    const id_seguro = req.params.idSeguro;
+    await DatosSeguroColision.destroy(
+        {
+            where:{id:id_seguro}
+        }
+    )
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+};
+
+
 module.exports = controllers;

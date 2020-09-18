@@ -9,7 +9,7 @@ const DatosAutomovil = db.define('DatosAutomovil',{
         primaryKey: true,
         autoIncrement: true
     },
-    sexo_contuctor: {
+    sexo_conductor: {
         type: sequelize.STRING
     },
 
