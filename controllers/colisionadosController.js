@@ -192,6 +192,20 @@ controllers.deleteSeguro = async( req, res) =>{
         res.json({success:false, message:err});
     })
 };
+controllers.deleteAutomovil = async( req, res) =>{
+    const id_Automovil = req.params.idAutomovil;
+    await DatosAutomovil.destroy(
+        {
+            where:{id:id_Automovil}
+        }
+    )
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+};
 
 
 module.exports = controllers;
