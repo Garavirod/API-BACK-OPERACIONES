@@ -68,5 +68,54 @@ controllers.registroIncoporacion = async (req, res) => {
 
 // GET
 
+controllers.getDesincoporaciones = async (req,res)=>{
+    await Desincorporacion.findAll()
+    .then(eve=>{
+        res.json({success:true, data:eve});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.getIncoporaciones = async (req,res)=>{
+    await Incorporacion.findAll()
+    .then(eve=>{
+        res.json({success:true, data:eve});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
 
 // DELETE
+
+controllers.borraIncorporacion = async (req,res)=>{
+    const id_incorporacion = req.params.idIncorporacion;
+    await Incorporacion.destroy({ 
+        where : {
+            id: id_incorporacion
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+controllers.borraDesincorporacion = async (req,res)=>{
+    const id_desincorporacion = req.params.idDesincorporacion;
+    await Incorporacion.destroy({ 
+        where : {
+            id: id_desincorporacion
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}

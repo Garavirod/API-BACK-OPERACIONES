@@ -67,4 +67,12 @@ Desincorporacion.hasOne(
     }
 );
 
+Incorporacion.hasOne(
+    Desincorporacion,{        
+        foreignKey : 'fk_desincorporacion',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
 module.exports = Incorporacion;
