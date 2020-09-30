@@ -30,10 +30,12 @@ app.get('/', (req, res) => {
 // // API path
  const lesionados = require('./routes/lesionadosRoutes');
  const colisiones = require('./routes/colisionadosRoutes');
+ const desincorporaciones = require('./routes/desincorporacionRoutes');
  const user = require("./routes/userRoutes");
  app.use("/lesionados", lesionados); //Rutas para lesionados
- app.use("/colisiones", colisiones); //Ritas para colisiones
- app.use("/users", user);
+ app.use("/colisiones", colisiones); //Rutas para colisiones
+ app.use("/desincorporaciones", desincorporaciones); //Rutas para desincorporaciones
+ app.use("/users", user); //Rutas para usuarios
 
 
 // Static
