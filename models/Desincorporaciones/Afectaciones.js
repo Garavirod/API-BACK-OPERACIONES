@@ -2,7 +2,7 @@ const sequelize = require('sequelize');
 const db = require('../../config/db');
 
 const Afectaciones = db.define('Afectaciones',{
-    id_afectacion:{
+    idAfectacion:{
         type: sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -10,6 +10,7 @@ const Afectaciones = db.define('Afectaciones',{
     kilometraje:{
         type: sequelize.DOUBLE
     }
+    //fkCumplimiento fkIncumplimiento goes in Cumplimientos_incumoplimientos
 });
 
 module.exports = Afectaciones;

@@ -3,12 +3,12 @@ const db = require('../../config/db');
 const Afectaciones = require('./Afectaciones');
 
 const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos', {
-    id_incum:{
+    idIncum:{
         type: sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    //id_desincorporacion: FK goes in Desincorporacion
+    //fkDesincorporacion: FK goes in Desincorporacion
     referencia:{
         type: sequelize.INTEGER,
     },
@@ -18,19 +18,19 @@ const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos',
     vuelta:{
         type: sequelize.STRING,
     },
-    num_vueltas:{
+    numVueltas:{
         type: sequelize.INTEGER,
     },
-    num_idas:{
+    numIdas:{
         type: sequelize.INTEGER,
     },
-    num_regresos:{
+    numRegresos:{
         type: sequelize.INTEGER,
     },
-    tramo_desde:{
+    tramoDesde:{
         type: sequelize.STRING,
     },
-    tramo_hasta:{
+    tramoHasta:{
         type: sequelize.STRING,
     },
     kilometraje:{
@@ -46,7 +46,7 @@ const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos',
 Cumplimientos_Incumplimientos.hasMany(
     Afectaciones,
     {        
-        foreignKey : 'fk_incumplimiento',
+        foreignKey : 'fkIncumplimiento',
         onUpdate:'cascade',
     }
 );
@@ -54,7 +54,7 @@ Cumplimientos_Incumplimientos.hasMany(
 Cumplimientos_Incumplimientos.hasMany(
     Afectaciones,
     {        
-        foreignKey : 'fk_cumplimiento',
+        foreignKey : 'fkCumplimiento',
         onUpdate:'cascade',
     }
 );
