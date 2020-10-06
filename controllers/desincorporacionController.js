@@ -8,7 +8,7 @@ db.sync({force:false});
 // POST
 controllers.addCumplimiento_incumplimiento = async(req,res)=>{
     const _cumpIncum = {
-        idDesincorporacion: req.body.idDesincorporacion, //FK
+        idDesincorporacion: req.params.idDesincorporacion, //FK
         referencia: req.body.referencia,
         ida: req.body.ida,
         vuelta: req.body.vuelta,
@@ -23,6 +23,7 @@ controllers.addCumplimiento_incumplimiento = async(req,res)=>{
 
     Cumplimiento_incumplimiento.create(_cumpIncum)
     .then(col=>{
+        console.log("Cumplimiento successfuly added");
         res.json({ success: true, data: col });
     })
     .catch(err=>{
@@ -36,7 +37,6 @@ controllers.addAfectacion = async(req,res)=>{
     const _afectacion = {
         kilometraje: req.body.kilometraje,
         //fk
-        fkIncumplimiento: req.body.fkIncumplimiento,
         fkCumplimiento: req.body.fkCumplimiento,
     };//_afectacion
 
@@ -51,7 +51,7 @@ controllers.addAfectacion = async(req,res)=>{
 };
 
 // GET
-controllers.getCumplimiento_incumplimiento = async (req,res)=>{
+controllers.getCumplimiento_incumplimientos = async (req,res)=>{
     await Cumplimiento_incumplimiento.findAll()
     .then(obj=>{
         res.json({success:true, data:obj});
@@ -62,7 +62,7 @@ controllers.getCumplimiento_incumplimiento = async (req,res)=>{
 }//getCumpl
 
 
-controllers.getAfectacion = async (req,res)=>{
+controllers.getAfectaciones = async (req,res)=>{
     await Afectacion.findAll()
     .then(obj=>{
         res.json({success:true, data:obj});
