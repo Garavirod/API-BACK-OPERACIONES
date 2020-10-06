@@ -10,7 +10,7 @@ const Afectaciones = db.define('Afectaciones',{
     kilometraje:{
         type: sequelize.DOUBLE
     }
-    //fkCumplimiento fkIncumplimiento goes in Cumplimientos_incumoplimientos
+    //reg_cum_inc goes in Cumplimientos_incumoplimientos
 });
 
 module.exports = Afectaciones;

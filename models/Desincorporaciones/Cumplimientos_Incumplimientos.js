@@ -8,9 +8,9 @@ const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos',
         primaryKey: true,
         autoIncrement: true
     },
-    //fkDesincorporacion: FK goes in Desincorporacion
+    //idDesincorporacion: FK goes in Desincorporacion
     referencia:{
-        type: sequelize.INTEGER,
+        type: sequelize.STRING,
     },
     ida:{
         type: sequelize.STRING,
@@ -42,21 +42,12 @@ const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos',
 });
 
 // Relationtionships
+Cumplimientos_Incumplimientos.hasMany(Afectaciones, {
+    foreignKey: 'reg_cum_inc',
+    onDelete:'cascade',
+    onUpdate:'cascade'
+  });
+Afectaciones.belongsTo(Cumplimientos_Incumplimientos);
 
-Cumplimientos_Incumplimientos.hasMany(
-    Afectaciones,
-    {        
-        foreignKey : 'fkIncumplimiento',
-        onUpdate:'cascade',
-    }
-);
-
-Cumplimientos_Incumplimientos.hasMany(
-    Afectaciones,
-    {        
-        foreignKey : 'fkCumplimiento',
-        onUpdate:'cascade',
-    }
-);
 
 module.exports = Cumplimientos_Incumplimientos;
