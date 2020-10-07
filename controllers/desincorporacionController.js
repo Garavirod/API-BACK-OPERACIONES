@@ -9,14 +9,14 @@ db.sync({force:false});
 controllers.addCumplimiento_incumplimiento = async(req,res)=>{
     const _cumpIncum = {
         idDesincorporacion: req.params.idDesincorporacion, //FK
-        referencia: req.body.referencia,
-        ida: req.body.ida,
-        vuelta: req.body.vuelta,
-        numVueltas:req.body.numVueltas,
-        numIdas: req.body.numIdas,
-        numRegresos:req.body.numRegresos,
-        tramoDesde: req.body.tramoDesde,
-        tramoHasta: req.body.tramoHasta,
+        referencia: req.body.ruta_referencia,
+        ida: req.body.ref_ida,
+        vuelta: req.body.ref_vuelta,
+        numVueltas:req.body.num_vuelta,
+        numIdas: req.body.num_ida,
+        numRegresos:req.body.num_regreso,
+        tramoDesde: req.body.tramo_desde,
+        tramoHasta: req.body.tramo_hasta,
         kilometraje: req.body.kilometraje,
         tipo: req.body.tipo
     };//_cumpIncum
