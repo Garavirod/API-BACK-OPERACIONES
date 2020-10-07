@@ -37,7 +37,7 @@ controllers.addAfectacion = async(req,res)=>{
     const _afectacion = {
         kilometraje: req.body.kilometraje,
         //fk
-        fkCumplimiento: req.body.fkCumplimiento,
+        reg_cum_inc: req.body.idCumplimiento,
     };//_afectacion
 
     Afectacion.create(_afectacion)
