@@ -1,9 +1,10 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
+const Acumulados_Distancias = require('./Acumulados_Distancias');
 
 const Distancias = db.define('Distancias',{
     idDistancia:{
-        type: sequelize.STRING,
+        type: sequelize.INTEGER,
         primaryKey: true
     },
     //idRuta FK goes in Rutas
@@ -15,14 +16,11 @@ const Distancias = db.define('Distancias',{
     }
 });
 
-/*
-
 Distancias.hasMany(Acumulados_Distancias, {
-    foreignKey: 'idDistancia',
+    foreignKey: 'idDistancias',
     onDelete:'cascade',
     onUpdate:'cascade'
   });
 Acumulados_Distancias.belongsTo(Distancias);
-*/
 
 module.exports = Distancias;
