@@ -4,7 +4,6 @@ const Afectacion = require('../models/Desincorporaciones/Afectaciones');
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
-
 // POST
 controllers.addCumplimiento_incumplimiento = async(req,res)=>{
     const _cumpIncum = {
@@ -24,6 +23,22 @@ controllers.addCumplimiento_incumplimiento = async(req,res)=>{
     Cumplimiento_incumplimiento.create(_cumpIncum)
     .then(col=>{
         console.log("Cumplimiento successfuly added");
+        //add afectacion
+        const _afectacion = {
+            kilometraje: col.dataValues.kilometraje,
+            //fk
+            reg_cum_inc: col.dataValues.idIncum,
+        };//_afectacion
+    
+        Afectacion.create(_afectacion)
+        .then(af=>{
+            console.log("Afectacion successfuly added");
+        })
+        .catch(err=>{
+            console.log("ERROR >:", err);
+                res.json({ success: false, message: err });
+        });//createAfectacion
+
         res.json({ success: true, data: col });
     })
     .catch(err=>{
@@ -33,6 +48,8 @@ controllers.addCumplimiento_incumplimiento = async(req,res)=>{
 
 }; //addCumpl
 
+/* Afectacion is added inmediately after the Cumplimiento_Incumplimiento is added,
+since it's idCumplimiento_Incumplimiento is needed for the Afectacion*/
 controllers.addAfectacion = async(req,res)=>{
     const _afectacion = {
         kilometraje: req.body.kilometraje,

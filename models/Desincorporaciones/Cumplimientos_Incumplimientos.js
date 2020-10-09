@@ -41,13 +41,18 @@ const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos',
     }
 });
 
+
 // Relationtionships
 Cumplimientos_Incumplimientos.hasMany(Afectaciones, {
     foreignKey: 'reg_cum_inc',
     onDelete:'cascade',
     onUpdate:'cascade'
   });
-Afectaciones.belongsTo(Cumplimientos_Incumplimientos);
+Afectaciones.belongsTo(Cumplimientos_Incumplimientos, {
+    foreignKey: 'reg_cum_inc',
+    onDelete:'cascade',
+    onUpdate:'cascade'
+  });
 
 
 module.exports = Cumplimientos_Incumplimientos;
