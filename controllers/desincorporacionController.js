@@ -6,7 +6,7 @@ const controllers = {};
 db.sync({force:false});
 
 // POST
-controllers.addMotivos = async(req,res)=>{
+controllers.addMotivo = async(req,res)=>{
     const _Motivos = {
         motivo: req.body.motivo
     };
@@ -20,7 +20,7 @@ controllers.addMotivos = async(req,res)=>{
             res.json({ success: false, message: err });
     });
 };
-controllers.addInformantes = async(req,res)=>{
+controllers.addInformante = async(req,res)=>{
     const _Informantes = {
         motivo: req.body.motivo
     };
@@ -36,7 +36,7 @@ controllers.addInformantes = async(req,res)=>{
 };
 
 // GET
-controllers.getMotivos = async (req,res)=>{
+controllers.getMotivo = async (req,res)=>{
     await Motivos.findAll()
     .then(obj=>{
         res.json({success:true, data:obj});
@@ -45,7 +45,7 @@ controllers.getMotivos = async (req,res)=>{
         res.json({success:false, message:err});
     })
 }
-controllers.getInformantes = async (req,res)=>{
+controllers.getInformante = async (req,res)=>{
     await Informantes.findAll()
     .then(obj=>{
         res.json({success:true, data:obj});
@@ -73,7 +73,7 @@ controllers.deleteMotivo = async (req,res)=>{
     })
 }
 
-controllers.deleteInformantes = async (req,res)=>{
+controllers.deleteInformante = async (req,res)=>{
     const id_Informantes = req.params.idInformante;
     await Informantes.destroy({ 
         where : {
