@@ -12,7 +12,7 @@ router.get('/informante-list',controllers.getInformante);
 
 // DELETE
 router.delete('/delete-Motivo/:idMotivo',controllers.deleteMotivo);
-router.delete('/delete-Motivo/:idInformante',controllers.deleteInformante);
+router.delete('/delete-Informante/:idInformante',controllers.deleteInformante);
 
 
 module.exports= router;
