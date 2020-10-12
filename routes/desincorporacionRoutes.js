@@ -10,6 +10,8 @@ router.post('/datos-afectacion/:fkCumplimiento',controller.addAfectacion);
 // GET
 router.get('/cumplimientos-list',controller.getCumplimiento_incumplimientos);
 router.get('/afectaciones-list',controller.getAfectaciones);
+router.get('/one-cumplimiento',controller.getOneCumplimiento_incumplimiento);
+router.get('/one-afectacion',controller.getOneAfectacion);
 
 // DELETE
 router.delete('/delete-cumplimiento/:idCumIncum',controller.deleteCumplimiento_incumplimiento);

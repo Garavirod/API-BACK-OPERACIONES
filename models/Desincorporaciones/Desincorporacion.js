@@ -1,6 +1,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
 const Cumplimientos_Incumplimientos = require('../../models/Desincorporaciones/Cumplimientos_Incumplimientos');
+const Incorporacion = require("../../models/Desincorporaciones/Incorporacion");
 
 const Desincorporacion = db.define("Desincorporacion", {
     idDesincorporacion: {
@@ -66,13 +67,21 @@ Desincorporacion.hasMany(Cumplimientos_Incumplimientos, {
     onDelete:'cascade',
     onUpdate:'cascade'
 });
-Cumplimientos_Incumplimientos.belongsTo(Desincorporacion);
+Cumplimientos_Incumplimientos.belongsTo(Desincorporacion, {
+    foreignKey : 'idDesincorporacion',
+    onDelete:'cascade',
+    onUpdate:'cascade'
+});
 
 Desincorporacion.hasOne(Incorporacion, {
     foreignKey : 'idDesincorporacion',
     onDelete:'cascade',
     onUpdate:'cascade'
 });
-Incorporacion.belongsTo(Desincorporacion);
+Incorporacion.belongsTo(Desincorporacion, {
+    foreignKey : 'idDesincorporacion',
+    onDelete:'cascade',
+    onUpdate:'cascade'
+});
 
 module.exports = Desincorporacion;

@@ -76,7 +76,19 @@ controllers.getCumplimiento_incumplimientos = async (req,res)=>{
     .catch(err=>{
         res.json({success:false, message:err});
     })
-}//getCumpl
+}//getCumplimiento_incumplimientos
+
+    //getOne
+controllers.getOneCumplimiento_incumplimiento = async(req, res) => {
+    await Cumplimiento_incumplimiento.findOne({ where: { idIncum: req.body.idIncum } })
+        .then(cumplIncum => {
+                log("cumplimiento_incumplimiento found");
+                res.json({ success: true, data: cumplIncum });
+        })
+        .catch((err) => {
+            res.json({success:false, message:err});
+        });
+};//getOneCumplimiento_incumplimiento
 
 
 controllers.getAfectaciones = async (req,res)=>{
@@ -87,7 +99,19 @@ controllers.getAfectaciones = async (req,res)=>{
     .catch(err=>{
         res.json({success:false, message:err});
     })
-}//getAfectacion
+}//getAfectaciones
+
+    //getOne
+controllers.getOneAfectacion = async(req, res) => {
+    await Afectacion.findOne({ where: { idAfectacion: req.body.idAfectacion } })
+        .then(afec => {
+                log("Afectacion found");
+                res.json({ success: true, data: afec });
+        })
+        .catch((err) => {
+            res.json({success:false, message:err});
+        });
+};//getOneAfectacion
 
 // DELETE
 controllers.deleteCumplimiento_incumplimiento = async (req,res)=>{
