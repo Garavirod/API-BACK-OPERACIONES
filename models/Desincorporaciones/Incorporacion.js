@@ -59,4 +59,20 @@ const Incorporacion = db.define("Incorporacion", {
     
 });
 
+Desincorporacion.hasOne(
+    Incorporacion,{        
+        foreignKey : 'fk_desincorporacion',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
+Incorporacion.hasOne(
+    Desincorporacion,{        
+        foreignKey : 'fk_desincorporacion',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
 module.exports = Incorporacion;

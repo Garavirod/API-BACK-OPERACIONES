@@ -1,6 +1,8 @@
 const db = require('../config/db');
 const Cumplimiento_incumplimiento = require('../models/Desincorporaciones/Cumplimientos_Incumplimientos');
 const Afectacion = require('../models/Desincorporaciones/Afectaciones');
+const Desincorporacion = require('../models/Desicorporaciones/Desincorporacion');
+const Incoporacion = require('../models/Desicorporaciones/Incorporacion');
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
