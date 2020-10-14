@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
-const Acumulados_Distancias = require('./Acumulados_Distancias');
+const Acumulados_Distancia = require('./Acumulados_Distancias');
 const Acumulado_Estacion = require('./Acumulado_Estacion');
 
 const Acumulados = db.define('Acumulados',{
@@ -16,12 +16,12 @@ const Acumulados = db.define('Acumulados',{
     }
 });
 
-Acumulados.hasMany(Acumulados_Distancias, {
+Acumulados.hasMany(Acumulados_Distancia, {
     foreignKey: 'idAcum',
     onDelete:'cascade',
     onUpdate:'cascade'
   });
-Acumulados_Distancias.belongsTo(Acumulados);
+Acumulados_Distancia.belongsTo(Acumulados);
 
 Acumulados.hasMany(Acumulado_Estacion, {
     foreignKey: 'idAcum',
