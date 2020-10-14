@@ -69,6 +69,65 @@ controllers.addAfectacion = async(req,res)=>{
     });//create
 };
 
+controllers.registroDesincoporacion = async (req, res) => {
+    const desincorporacion = {
+        fecha: req.body.fecha,
+        hora: req.body.hora,
+        linea: req.body.linea,
+        estacion: req.body.estacion,
+        solicita: req.body.sentido,
+        informa: req.body.informa,
+        empresa: req.body.empresa,
+        economico: req.body.economico,
+        motivo: req.body.motivo,
+        odometro: req.body.odometro,
+        creedencial: req.body.creedencial,
+        operador: req.body.operador,
+        jornada: req.body.jornada,
+        observaciones: req.body.observaciones,
+        tipoDesincorporacion: req.body.tipoDesincorporacion,
+        estadoFolio: req.body.estadoFolio,
+    };
+
+    Desincoporacion.create(desincorporacion)
+        .then(des => {
+            res.json({ success: true, data: des });
+        })
+        .catch(err => {
+            console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+        })
+};//registroDesincoporacion
+
+controllers.registroIncoporacion = async (req, res) => {
+    const incorporacion = {
+        fecha: req.body.fecha,
+        hora: req.body.hora,
+        linea: req.body.linea,
+        estacion: req.body.estacion,
+        sentido: req.body.sentido,
+        status: req.body.status,
+        entrada: req.body.entrada,
+        retrazo: req.body.retrazo,
+        informa: req.body.informa,
+        empresa: req.body.empresa,
+        economico: req.body.economico,
+        odometro: req.body.odometro,
+        creedencial: req.body.creedencial,
+        operador: req.body.operador,
+        observaciones: req.body.observaciones,
+    };
+
+    Incoporacion.create(incorporacion)
+        .then(inc => {
+            res.json({ success: true, data: inc });
+        })
+        .catch(err => {
+            console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+        })
+};//registroIncoporacion
+
 // GET
 controllers.getCumplimiento_incumplimientos = async (req,res)=>{
     await Cumplimiento_incumplimiento.findAll()
@@ -115,6 +174,27 @@ controllers.getOneAfectacion = async(req, res) => {
         });
 };//getOneAfectacion
 
+controllers.getDesincoporaciones = async (req,res)=>{
+    await Desincorporacion.findAll()
+    .then(eve=>{
+        res.json({success:true, data:eve});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}//getDesincoporaciones
+
+controllers.getIncoporaciones = async (req,res)=>{
+    await Incorporacion.findAll()
+    .then(eve=>{
+        res.json({success:true, data:eve});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}//getIncoporaciones
+
+
 // DELETE
 controllers.deleteCumplimiento_incumplimiento = async (req,res)=>{
     const idCumIncum = req.params.idCumIncum;
@@ -141,5 +221,36 @@ controllers.deleteAfectacion = async (req,res)=>{
         res.json({success:false, message:err});
     })
 };//deleteAfectacion
+
+controllers.borraIncorporacion = async (req,res)=>{
+    const id_incorporacion = req.params.idIncorporacion;
+    await Incorporacion.destroy({ 
+        where : {
+            id: id_incorporacion
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}//borraIncorporacion
+
+controllers.borraDesincorporacion = async (req,res)=>{
+    const id_desincorporacion = req.params.idDesincorporacion;
+    await Incorporacion.destroy({ 
+        where : {
+            id: id_desincorporacion
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}//borraDesincorporacion
+
 
 module.exports = controllers;
