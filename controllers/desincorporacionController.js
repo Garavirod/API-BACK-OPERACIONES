@@ -12,7 +12,8 @@ controllers.addCumplimiento_incumplimiento = async(req,res)=>{
         idDesincorporacion: req.params.idDesincorporacion, //FK
         referencia: req.body.ruta_referencia,
         ida: req.body.ref_ida,
-        vuelta: req.body.ref_vuelta,
+        /*se quitó
+        vuelta: req.body.ref_vuelta,*/
         numVueltas:req.body.num_vuelta,
         numIdas: req.body.num_ida,
         numRegresos:req.body.num_regreso,

@@ -15,9 +15,10 @@ const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos',
     ida:{
         type: sequelize.STRING,
     },
+    /*se quitó
     vuelta:{
         type: sequelize.STRING,
-    },
+    },*/
     numVueltas:{
         type: sequelize.INTEGER,
     },
