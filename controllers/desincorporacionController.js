@@ -1,11 +1,12 @@
 const db = require('../config/db');
 const Cumplimiento_incumplimiento = require('../models/Desincorporaciones/Cumplimientos_Incumplimientos');
 const Afectacion = require('../models/Desincorporaciones/Afectaciones');
-const Desincorporacion = require('../models/Desicorporaciones/Desincorporacion');
-const Incoporacion = require('../models/Desicorporaciones/Incorporacion');
+const Desincorporacion = require('../models/Desincorporaciones/Desincorporacion');
+const Incoporacion = require('../models/Desincorporaciones/Incorporacion');
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
+//Afectacion.drop();
 // POST
 controllers.addCumplimiento_incumplimiento = async(req,res)=>{
     const _cumpIncum = {
@@ -70,7 +71,7 @@ controllers.addAfectacion = async(req,res)=>{
     });//create
 };
 
-controllers.registroDesincoporacion = async (req, res) => {
+controllers.registroDesincorporacion = async (req, res) => {
     const desincorporacion = {
         fecha: req.body.fecha,
         hora: req.body.hora,
@@ -90,7 +91,7 @@ controllers.registroDesincoporacion = async (req, res) => {
         estadoFolio: req.body.estadoFolio,
     };
 
-    Desincoporacion.create(desincorporacion)
+    Desincorporacion.create(desincorporacion)
         .then(des => {
             res.json({ success: true, data: des });
         })
@@ -98,7 +99,7 @@ controllers.registroDesincoporacion = async (req, res) => {
             console.log("ERROR >:", err);
             res.json({ success: false, message: err });
         })
-};//registroDesincoporacion
+};//registroDesincorporacion
 
 controllers.registroIncoporacion = async (req, res) => {
     const incorporacion = {
