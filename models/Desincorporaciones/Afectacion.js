@@ -1,7 +1,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
 
-const Afectaciones = db.define('Afectaciones',{
+const Afectacion = db.define('Afectacion',{
     idAfectacion:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -13,5 +13,5 @@ const Afectaciones = db.define('Afectaciones',{
     //reg_cum_inc goes in Cumplimientos_incumoplimientos
 });
 
-module.exports = Afectaciones;
+module.exports = Afectacion;
 

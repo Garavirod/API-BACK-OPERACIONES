@@ -1,8 +1,8 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
-const Afectaciones = require('./Afectaciones');
+const Afectacion = require('./Afectacion');
 
-const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos', {
+const Cumplimiento_Incumplimiento = db.define('Cumplimiento_Incumplimiento', {
     idIncum:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -44,16 +44,16 @@ const Cumplimientos_Incumplimientos = db.define('Cumplimientos_Incumplimientos',
 
 
 // Relationtionships
-Cumplimientos_Incumplimientos.hasMany(Afectaciones, {
+Cumplimiento_Incumplimiento.hasMany(Afectacion, {
     foreignKey: 'reg_cum_inc',
     onDelete:'cascade',
     onUpdate:'cascade'
   });
-Afectaciones.belongsTo(Cumplimientos_Incumplimientos, {
+Afectacion.belongsTo(Cumplimiento_Incumplimiento, {
     foreignKey: 'reg_cum_inc',
     onDelete:'cascade',
     onUpdate:'cascade'
   });
 
 
-module.exports = Cumplimientos_Incumplimientos;
+module.exports = Cumplimiento_Incumplimiento;

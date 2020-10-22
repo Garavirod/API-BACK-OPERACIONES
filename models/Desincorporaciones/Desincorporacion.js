@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
-const Cumplimientos_Incumplimientos = require('../../models/Desincorporaciones/Cumplimientos_Incumplimientos');
+const Cumplimiento_Incumplimiento = require('./Cumplimiento_Incumplimiento');
 const Incorporacion = require("../../models/Desincorporaciones/Incorporacion");
 
 const Desincorporacion = db.define("Desincorporacion", {
@@ -17,7 +17,7 @@ const Desincorporacion = db.define("Desincorporacion", {
         type:sequelize.TIME,
     },
     linea: {
-        type: sequelize.INTEGER
+        type: sequelize.STRING
     },
     estacion: {
         type: sequelize.STRING
@@ -62,12 +62,12 @@ const Desincorporacion = db.define("Desincorporacion", {
 });
 
 // Relationtionships
-Desincorporacion.hasMany(Cumplimientos_Incumplimientos, {
+Desincorporacion.hasMany(Cumplimiento_Incumplimiento, {
     foreignKey : 'idDesincorporacion',
     onDelete:'cascade',
     onUpdate:'cascade'
 });
-Cumplimientos_Incumplimientos.belongsTo(Desincorporacion, {
+Cumplimiento_Incumplimiento.belongsTo(Desincorporacion, {
     foreignKey : 'idDesincorporacion',
     onDelete:'cascade',
     onUpdate:'cascade'

@@ -1,12 +1,12 @@
 const db = require('../config/db');
-const Cumplimiento_incumplimiento = require('../models/Desincorporaciones/Cumplimientos_Incumplimientos');
-const Afectacion = require('../models/Desincorporaciones/Afectaciones');
+const Cumplimiento_incumplimiento = require('../models/Desincorporaciones/Cumplimiento_Incumplimiento');
+const Afectacion = require('../models/Desincorporaciones/Afectacion');
 const Desincorporacion = require('../models/Desincorporaciones/Desincorporacion');
 const Incoporacion = require('../models/Desincorporaciones/Incorporacion');
+const Incorporacion = require('../models/Desincorporaciones/Incorporacion');
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
-//Afectacion.drop();
 // POST
 controllers.addCumplimiento_incumplimiento = async(req,res)=>{
     const _cumpIncum = {
@@ -72,28 +72,55 @@ controllers.addAfectacion = async(req,res)=>{
 };
 
 controllers.registroDesincorporacion = async (req, res) => {
-    const desincorporacion = {
-        fecha: req.body.fecha,
-        hora: req.body.hora,
-        linea: req.body.linea,
-        estacion: req.body.estacion,
-        solicita: req.body.sentido,
-        informa: req.body.informa,
-        empresa: req.body.empresa,
-        economico: req.body.economico,
-        motivo: req.body.motivo,
-        odometro: req.body.odometro,
-        creedencial: req.body.creedencial,
-        operador: req.body.operador,
-        jornada: req.body.jornada,
-        observaciones: req.body.observaciones,
-        tipoDesincorporacion: req.body.tipoDesincorporacion,
-        estadoFolio: req.body.estadoFolio,
+    //console.log("el body");
+    //console.log(req.body);
+    const desincorporacion = {  
+        fecha: req.body.valuesDes.fecha,
+        hora: req.body.valuesDes.hora,
+        linea: req.body.valuesDes.linea,
+        estacion: req.body.valuesDes.estacion,
+        solicita: req.body.valuesDes.solicita,
+        informa: req.body.valuesDes.informa,
+        empresa: req.body.valuesDes.empresa,
+        economico: req.body.valuesDes.economico,
+        motivo: req.body.valuesDes.motivo,
+        odometro: req.body.valuesDes.odometro,
+        creedencial: req.body.valuesDes.credencial,
+        operador: req.body.valuesDes.nombre,
+        jornada: req.body.valuesDes.jornada,
+        observaciones: req.body.valuesDes.observaciones,
+        tipoDesincorporacion: req.body.valuesDes.tipo,
+        estadoFolio: req.body.valuesDes.edoFolio,
+    };
+
+    const _cumpIncum = {
+        //idDesincorporacion: req.params.idDesincorporacion,
+        referencia: req.body.valReferen.ruta_referencia,
+        ida: req.body.valReferen.ref_ida,
+        /*se quitó
+        vuelta: req.body.ref_vuelta,*/
+        numVueltas:req.body.num_vuelta,
+        numIdas: req.body.valReferen.num_ida,
+        numRegresos:req.body.valReferen.num_regreso,
+        tramoDesde: req.body.valReferen.tramo_desde,
+        tramoHasta: req.body.valReferen.tramo_hasta,
+        kilometraje: req.body.valReferen.kilometraje,
+        tipo: req.body.valReferen.tipo
+    };//_cumpIncum
+
+    const _afectacion = {
+        kilometraje: req.body.valReferen.kilometraje
     };
 
     Desincorporacion.create(desincorporacion)
         .then(des => {
-            res.json({ success: true, data: des });
+            des.createCumplimiento_Incumplimiento(_cumpIncum)
+            .then(cum =>{
+                cum.createAfectacion(_afectacion).then(af=>{
+                    //DÓNDE MANDO ESTE
+                    res.json({ success: true, data: des });
+                });
+            });
         })
         .catch(err => {
             console.log("ERROR >:", err);
