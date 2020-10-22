@@ -55,71 +55,171 @@ controllers.addCumplimiento_incumplimiento = async(req,res)=>{
 /* Afectacion is added inmediately after the Cumplimiento_Incumplimiento is added,
 since it's idCumplimiento_Incumplimiento is needed for the Afectacion*/
 controllers.addAfectacion = async(req,res)=>{
-    const _afectacion = {
-        kilometraje: req.body.kilometraje,
-        //fk
-        reg_cum_inc: req.body.idCumplimiento,
-    };//_afectacion
-
-    Afectacion.create(_afectacion)
-    .then(col=>{
-        res.json({ success: true, data: col });
-    })
-    .catch(err=>{
-        console.log("ERROR >:", err);
-            res.json({ success: false, message: err });
-    });//create
-};
-
-controllers.registroDesincorporacion = async (req, res) => {
-    //console.log("el body");
-    //console.log(req.body);
     const desincorporacion = {  
-        fecha: req.body.valuesDes.fecha,
-        hora: req.body.valuesDes.hora,
-        linea: req.body.valuesDes.linea,
-        estacion: req.body.valuesDes.estacion,
-        solicita: req.body.valuesDes.solicita,
-        informa: req.body.valuesDes.informa,
-        empresa: req.body.valuesDes.empresa,
-        economico: req.body.valuesDes.economico,
-        motivo: req.body.valuesDes.motivo,
-        odometro: req.body.valuesDes.odometro,
-        creedencial: req.body.valuesDes.credencial,
-        operador: req.body.valuesDes.nombre,
-        jornada: req.body.valuesDes.jornada,
-        observaciones: req.body.valuesDes.observaciones,
-        tipoDesincorporacion: req.body.valuesDes.tipo,
-        estadoFolio: req.body.valuesDes.edoFolio,
+        fecha: req.body.fecha,
+        hora: req.body.hora,
+        linea: req.body.linea,
+        estacion: req.body.estacion,
+        solicita: req.body.solicita,
+        informa: req.body.informa,
+        empresa: req.body.empresa,
+        economico: req.body.economico,
+        motivo: req.body.motivo,
+        odometro: req.body.odometro,
+        creedencial: req.body.credencial,
+        operador: req.body.nombre,
+        jornada: req.body.jornada,
+        observaciones: req.body.observaciones,
+        tipoDesincorporacion: req.body.tipo,
+        estadoFolio: req.body.edoFolio,
     };
 
     const _cumpIncum = {
         //idDesincorporacion: req.params.idDesincorporacion,
-        referencia: req.body.valReferen.ruta_referencia,
-        ida: req.body.valReferen.ref_ida,
+        referencia: req.body.ruta_referencia,
+        ida: req.body.ref_ida,
         /*se quitó
         vuelta: req.body.ref_vuelta,*/
         numVueltas:req.body.num_vuelta,
-        numIdas: req.body.valReferen.num_ida,
-        numRegresos:req.body.valReferen.num_regreso,
-        tramoDesde: req.body.valReferen.tramo_desde,
-        tramoHasta: req.body.valReferen.tramo_hasta,
-        kilometraje: req.body.valReferen.kilometraje,
-        tipo: req.body.valReferen.tipo
+        numIdas: req.body.num_ida,
+        numRegresos:req.body.num_regreso,
+        tramoDesde: req.body.tramo_desde,
+        tramoHasta: req.body.tramo_hasta,
+        kilometraje: req.body.kilometraje,
+        tipo: req.body.tipo
+    };//_cumpIncum
+    
+    Desincorporacion.create(desincorporacion)
+        .then(des => {
+            des.createCumplimiento_Incumplimiento(_cumpIncum)
+            .then(cum =>{
+                const _afectacion = {
+                    kilometraje: req.body.kilometraje
+                }
+                cum.createAfectacion(_afectacion).then(af =>{
+                    res.json({ success: true, data: des });
+                });
+            });
+        })
+        .catch(err => {
+            console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+        })
+
+};//addAfectacion
+
+controllers.addAfectacion2 = async(req,res)=>{
+    const [desincorporacion, valRef1, valRef2] = req.body;
+
+    const _desincorporacion = {  
+        fecha: desincorporacion.fecha,
+        hora: desincorporacion.hora,
+        linea: desincorporacion.linea,
+        estacion: desincorporacion.estacion,
+        solicita: desincorporacion.solicita,
+        informa: desincorporacion.informa,
+        empresa: desincorporacion.empresa,
+        economico: desincorporacion.economico,
+        motivo: desincorporacion.motivo,
+        odometro: desincorporacion.odometro,
+        creedencial: desincorporacion.credencial,
+        operador: desincorporacion.nombre,
+        jornada: desincorporacion.jornada,
+        observaciones: desincorporacion.observaciones,
+        tipoDesincorporacion: desincorporacion.tipo,
+        estadoFolio: desincorporacion.edoFolio,
+    };
+    const _cumpIncum1 = {
+        referencia: valRef1.ruta_referencia,
+        ida: valRef1.ref_ida,
+        numVueltas:valRef1.num_vuelta,
+        numIdas: valRef1.num_ida,
+        numRegresos:valRef1.num_regreso,
+        tramoDesde: valRef1.tramo_desde,
+        tramoHasta: valRef1.tramo_hasta,
+        kilometraje: valRef1.kilometraje,
+        tipo: valRef1.tipo
+    };//_cumpIncum
+    const _cumpIncum2 = {
+        referencia: valRef2.ruta_referencia,
+        ida: valRef2.ref_ida,
+        numVueltas:valRef2.num_vuelta,
+        numIdas: valRef2.num_ida,
+        numRegresos:valRef2.num_regreso,
+        tramoDesde: valRef2.tramo_desde,
+        tramoHasta: valRef2.tramo_hasta,
+        kilometraje: valRef2.kilometraje,
+        tipo: valRef2.tipo
     };//_cumpIncum
 
-    const _afectacion = {
-        kilometraje: req.body.valReferen.kilometraje
+    Desincorporacion.create(_desincorporacion)
+        .then(des => {
+            des.createCumplimiento_Incumplimiento(_cumpIncum1)
+            .then(cum =>{
+                const _afectacion = {
+                    kilometraje: _cumpIncum1.kilometraje
+                }
+                cum.createAfectacion(_afectacion);
+            des.createCumplimiento_Incumplimiento(_cumpIncum2)
+            .then(cum2 =>{
+                const _afectacion = {
+                    kilometraje: _cumpIncum2.kilometraje
+                }
+                cum2.createAfectacion(_afectacion).then(af =>{
+                    res.json({ success: true, data: af });
+                });
+            });
+            });
+        })
+        .catch(err => {
+            console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+        })
+
+};//addAfectacion2
+
+controllers.registroDesincorporacion = async (req, res) => {
+    //console.log("el body");
+    console.log(req.body);
+    const desincorporacion = {  
+        fecha: req.body.fecha,
+        hora: req.body.hora,
+        linea: req.body.linea,
+        estacion: req.body.estacion,
+        solicita: req.body.solicita,
+        informa: req.body.informa,
+        empresa: req.body.empresa,
+        economico: req.body.economico,
+        motivo: req.body.motivo,
+        odometro: req.body.odometro,
+        creedencial: req.body.credencial,
+        operador: req.body.nombre,
+        jornada: req.body.jornada,
+        observaciones: req.body.observaciones,
+        tipoDesincorporacion: req.body.tipo,
+        estadoFolio: req.body.edoFolio,
     };
+
+    const _cumpIncum = {
+        //idDesincorporacion: req.params.idDesincorporacion,
+        referencia: req.body.ruta_referencia,
+        ida: req.body.ref_ida,
+        /*se quitó
+        vuelta: req.body.ref_vuelta,*/
+        numVueltas:req.body.num_vuelta,
+        numIdas: req.body.num_ida,
+        numRegresos:req.body.num_regreso,
+        tramoDesde: req.body.tramo_desde,
+        tramoHasta: req.body.tramo_hasta,
+        kilometraje: req.body.kilometraje,
+        tipo: req.body.tipo
+    };//_cumpIncum
 
     Desincorporacion.create(desincorporacion)
         .then(des => {
             des.createCumplimiento_Incumplimiento(_cumpIncum)
             .then(cum =>{
-                cum.createAfectacion(_afectacion).then(af=>{
-                    //DÓNDE MANDO ESTE
-                    res.json({ success: true, data: des });
-                });
+                res.json({ success: true, data: des });
             });
         })
         .catch(err => {
