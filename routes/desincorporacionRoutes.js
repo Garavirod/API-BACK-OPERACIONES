@@ -11,6 +11,8 @@ router.post('/datos-desincorporacion',controller.registroDesincorporacion);
 
 
 // GET
+router.get('/folios-abiertos',controller.getFoliosAbiertos);
+router.get('/one-desincorporacion/:idDesincorporacion',controller.getOneDesincorporacion);
 router.get('/cumplimientos-list',controller.getCumplimiento_incumplimientos);
 router.get('/afectaciones-list',controller.getAfectaciones);
 router.get('/one-cumplimiento',controller.getOneCumplimiento_incumplimiento);

@@ -258,6 +258,26 @@ controllers.registroIncoporacion = async (req, res) => {
 };//registroIncoporacion
 
 // GET
+controllers.getFoliosAbiertos = async (req,res)=>{
+    await Desincorporacion.findAll({ where: { estadoFolio: "Abierto" } })
+    .then(foundFolios=>{
+        res.json({success:true, data:foundFolios});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    });
+}//getFoliosAbiertos
+
+controllers.getOneDesincorporacion = async (req,res)=>{
+    await Desincorporacion.findOne({ where: { idDesincorporacion: req.params.idDesincorporacion} })
+    .then(foundDes=>{
+        res.json({success:true, data:foundDes});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    });
+}//getOneDesincorporacion
+
 controllers.getCumplimiento_incumplimientos = async (req,res)=>{
     await Cumplimiento_incumplimiento.findAll()
     .then(obj=>{
