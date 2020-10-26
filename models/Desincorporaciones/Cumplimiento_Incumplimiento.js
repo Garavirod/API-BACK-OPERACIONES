@@ -3,35 +3,31 @@ const db = require('../../config/db');
 const Afectacion = require('./Afectacion');
 
 const Cumplimiento_Incumplimiento = db.define('Cumplimiento_Incumplimiento', {
-    idIncum:{
+    id:{
         type: sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     //idDesincorporacion: FK goes in Desincorporacion
-    referencia:{
+    ruta_referencia:{
         type: sequelize.STRING,
     },
-    ida:{
+    ref_ida:{
         type: sequelize.STRING,
     },
-    /*se quitó
-    vuelta:{
-        type: sequelize.STRING,
-    },*/
-    numVueltas:{
+    num_vuelta:{
         type: sequelize.INTEGER,
     },
-    numIdas:{
+    num_ida:{
         type: sequelize.INTEGER,
     },
-    numRegresos:{
+    num_regreso:{
         type: sequelize.INTEGER,
     },
-    tramoDesde:{
+    tramo_desde:{
         type: sequelize.STRING,
     },
-    tramoHasta:{
+    tramo_hasta:{
         type: sequelize.STRING,
     },
     kilometraje:{

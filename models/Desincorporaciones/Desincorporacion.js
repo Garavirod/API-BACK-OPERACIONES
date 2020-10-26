@@ -4,7 +4,7 @@ const Cumplimiento_Incumplimiento = require('./Cumplimiento_Incumplimiento');
 const Incorporacion = require("../../models/Desincorporaciones/Incorporacion");
 
 const Desincorporacion = db.define("Desincorporacion", {
-    idDesincorporacion: {
+    id: {
         type: sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -40,10 +40,10 @@ const Desincorporacion = db.define("Desincorporacion", {
     odometro: {
         type: sequelize.STRING
     },
-    creedencial: {
+    credencial: {
         type: sequelize.STRING
     },
-    operador: {
+    nombre: {
         type: sequelize.STRING
     },
     jornada: {
@@ -52,10 +52,10 @@ const Desincorporacion = db.define("Desincorporacion", {
     observaciones: {
         type: sequelize.STRING
     },
-    tipoDesincorporacion: {
+    tipo: {
         type: sequelize.STRING
     },
-    estadoFolio: {
+    edoFolio: {
         type: sequelize.STRING
     }
     

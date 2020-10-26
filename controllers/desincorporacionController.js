@@ -2,19 +2,22 @@ const db = require('../config/db');
 const Cumplimiento_incumplimiento = require('../models/Desincorporaciones/Cumplimiento_Incumplimiento');
 const Afectacion = require('../models/Desincorporaciones/Afectacion');
 const Desincorporacion = require('../models/Desincorporaciones/Desincorporacion');
-const Incoporacion = require('../models/Desincorporaciones/Incorporacion');
+//const Incoporacion = require('../models/Desincorporaciones/Incorporacion');
 const Incorporacion = require('../models/Desincorporaciones/Incorporacion');
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
+/*Afectacion.drop();
+Cumplimiento_incumplimiento.drop();
+Incorporacion.drop();
+Desincorporacion.drop();*/
 // POST
+/*
 controllers.addCumplimiento_incumplimiento = async(req,res)=>{
     const _cumpIncum = {
         idDesincorporacion: req.params.idDesincorporacion, //FK
         referencia: req.body.ruta_referencia,
         ida: req.body.ref_ida,
-        /*se quitó
-        vuelta: req.body.ref_vuelta,*/
         numVueltas:req.body.num_vuelta,
         numIdas: req.body.num_ida,
         numRegresos:req.body.num_regreso,
@@ -50,7 +53,7 @@ controllers.addCumplimiento_incumplimiento = async(req,res)=>{
             res.json({ success: false, message: err });
     });//create
 
-}; //addCumpl
+}; //addCumpl*/
 
 /* Afectacion is added inmediately after the Cumplimiento_Incumplimiento is added,
 since it's idCumplimiento_Incumplimiento is needed for the Afectacion*/
@@ -66,25 +69,25 @@ controllers.addAfectacion = async(req,res)=>{
         economico: req.body.economico,
         motivo: req.body.motivo,
         odometro: req.body.odometro,
-        creedencial: req.body.credencial,
-        operador: req.body.nombre,
+        credencial: req.body.credencial,
+        nombre: req.body.nombre,
         jornada: req.body.jornada,
         observaciones: req.body.observaciones,
-        tipoDesincorporacion: req.body.tipo,
-        estadoFolio: req.body.edoFolio,
+        tipo: req.body.tipo,
+        edoFolio: req.body.edoFolio,
     };
 
     const _cumpIncum = {
         //idDesincorporacion: req.params.idDesincorporacion,
-        referencia: req.body.ruta_referencia,
-        ida: req.body.ref_ida,
+        ruta_referencia: req.body.ruta_referencia,
+        ref_ida: req.body.ref_ida,
         /*se quitó
         vuelta: req.body.ref_vuelta,*/
-        numVueltas:req.body.num_vuelta,
-        numIdas: req.body.num_ida,
-        numRegresos:req.body.num_regreso,
-        tramoDesde: req.body.tramo_desde,
-        tramoHasta: req.body.tramo_hasta,
+        num_vuelta:req.body.num_vuelta,
+        num_ida: req.body.num_ida,
+        num_regreso:req.body.num_regreso,
+        tramo_desde: req.body.tramo_desde,
+        tramo_hasta: req.body.tramo_hasta,
         kilometraje: req.body.kilometraje,
         tipo: req.body.tipo
     };//_cumpIncum
@@ -122,32 +125,32 @@ controllers.addAfectacion2 = async(req,res)=>{
         economico: desincorporacion.economico,
         motivo: desincorporacion.motivo,
         odometro: desincorporacion.odometro,
-        creedencial: desincorporacion.credencial,
-        operador: desincorporacion.nombre,
+        credencial: desincorporacion.credencial,
+        nombre: desincorporacion.nombre,
         jornada: desincorporacion.jornada,
         observaciones: desincorporacion.observaciones,
-        tipoDesincorporacion: desincorporacion.tipo,
-        estadoFolio: desincorporacion.edoFolio,
+        tipo: desincorporacion.tipo,
+        edoFolio: desincorporacion.edoFolio,
     };
     const _cumpIncum1 = {
-        referencia: valRef1.ruta_referencia,
-        ida: valRef1.ref_ida,
-        numVueltas:valRef1.num_vuelta,
-        numIdas: valRef1.num_ida,
-        numRegresos:valRef1.num_regreso,
-        tramoDesde: valRef1.tramo_desde,
-        tramoHasta: valRef1.tramo_hasta,
+        ruta_referencia: valRef1.ruta_referencia,
+        ref_ida: valRef1.ref_ida,
+        num_vuelta:valRef1.num_vuelta,
+        num_ida: valRef1.num_ida,
+        num_regreso:valRef1.num_regreso,
+        tramo_desde: valRef1.tramo_desde,
+        tramo_hasta: valRef1.tramo_hasta,
         kilometraje: valRef1.kilometraje,
         tipo: valRef1.tipo
     };//_cumpIncum
     const _cumpIncum2 = {
-        referencia: valRef2.ruta_referencia,
-        ida: valRef2.ref_ida,
-        numVueltas:valRef2.num_vuelta,
-        numIdas: valRef2.num_ida,
-        numRegresos:valRef2.num_regreso,
-        tramoDesde: valRef2.tramo_desde,
-        tramoHasta: valRef2.tramo_hasta,
+        ruta_referencia: valRef2.ruta_referencia,
+        ref_ida: valRef2.ref_ida,
+        num_vuelta:valRef2.num_vuelta,
+        num_ida: valRef2.num_ida,
+        num_regreso:valRef2.num_regreso,
+        tramo_desde: valRef2.tramo_desde,
+        tramo_hasta: valRef2.tramo_hasta,
         kilometraje: valRef2.kilometraje,
         tipo: valRef2.tipo
     };//_cumpIncum
@@ -192,25 +195,23 @@ controllers.registroDesincorporacion = async (req, res) => {
         economico: req.body.economico,
         motivo: req.body.motivo,
         odometro: req.body.odometro,
-        creedencial: req.body.credencial,
-        operador: req.body.nombre,
+        credencial: req.body.credencial,
+        nombre: req.body.nombre,
         jornada: req.body.jornada,
         observaciones: req.body.observaciones,
-        tipoDesincorporacion: req.body.tipo,
-        estadoFolio: req.body.edoFolio,
+        tipo: req.body.tipo,
+        edoFolio: req.body.edoFolio,
     };
 
     const _cumpIncum = {
         //idDesincorporacion: req.params.idDesincorporacion,
-        referencia: req.body.ruta_referencia,
-        ida: req.body.ref_ida,
-        /*se quitó
-        vuelta: req.body.ref_vuelta,*/
-        numVueltas:req.body.num_vuelta,
-        numIdas: req.body.num_ida,
-        numRegresos:req.body.num_regreso,
-        tramoDesde: req.body.tramo_desde,
-        tramoHasta: req.body.tramo_hasta,
+        ruta_referencia: req.body.ruta_referencia,
+        ref_ida: req.body.ref_ida,
+        num_vuelta:req.body.num_vuelta,
+        num_ida: req.body.num_ida,
+        num_regreso:req.body.num_regreso,
+        tramo_desde: req.body.tramo_desde,
+        tramo_hasta: req.body.tramo_hasta,
         kilometraje: req.body.kilometraje,
         tipo: req.body.tipo
     };//_cumpIncum
@@ -259,7 +260,7 @@ controllers.registroIncoporacion = async (req, res) => {
 
 // GET
 controllers.getFoliosAbiertos = async (req,res)=>{
-    await Desincorporacion.findAll({ where: { estadoFolio: "Abierto" } })
+    await Desincorporacion.findAll({ where: { edoFolio: "Abierto" } })
     .then(foundFolios=>{
         res.json({success:true, data:foundFolios});
     })
@@ -267,16 +268,16 @@ controllers.getFoliosAbiertos = async (req,res)=>{
         res.json({success:false, message:err});
     });
 }//getFoliosAbiertos
-
+/*
 controllers.getOneDesincorporacion = async (req,res)=>{
-    await Desincorporacion.findOne({ where: { idDesincorporacion: req.params.idDesincorporacion} })
+    await Desincorporacion.findOne({ where: { id: req.params.idDesincorporacion} })
     .then(foundDes=>{
         res.json({success:true, data:foundDes});
     })
     .catch(err=>{
         res.json({success:false, message:err});
     });
-}//getOneDesincorporacion
+}//getOneDesincorporacion*/
 
 controllers.getCumplimiento_incumplimientos = async (req,res)=>{
     await Cumplimiento_incumplimiento.findAll()
@@ -290,7 +291,7 @@ controllers.getCumplimiento_incumplimientos = async (req,res)=>{
 
     //getOne
 controllers.getOneCumplimiento_incumplimiento = async(req, res) => {
-    await Cumplimiento_incumplimiento.findOne({ where: { idIncum: req.body.idIncum } })
+    await Cumplimiento_incumplimiento.findOne({ where: { id: req.body.idIncum } })
         .then(cumplIncum => {
                 log("cumplimiento_incumplimiento found");
                 res.json({ success: true, data: cumplIncum });
@@ -313,7 +314,7 @@ controllers.getAfectaciones = async (req,res)=>{
 
     //getOne
 controllers.getOneAfectacion = async(req, res) => {
-    await Afectacion.findOne({ where: { idAfectacion: req.body.idAfectacion } })
+    await Afectacion.findOne({ where: { id: req.body.idAfectacion } })
         .then(afec => {
                 log("Afectacion found");
                 res.json({ success: true, data: afec });
@@ -348,7 +349,7 @@ controllers.getIncoporaciones = async (req,res)=>{
 controllers.deleteCumplimiento_incumplimiento = async (req,res)=>{
     const idCumIncum = req.params.idCumIncum;
     await Cumplimiento_incumplimiento.destroy({ 
-        where : {idIncum: idCumIncum}
+        where : {id: idCumIncum}
     })
     .then(()=>{
         res.json({success:true});
@@ -361,7 +362,7 @@ controllers.deleteCumplimiento_incumplimiento = async (req,res)=>{
 controllers.deleteAfectacion = async (req,res)=>{
     const idAfectacion = req.params.idAfectacion;
     await Afectacion.destroy({ 
-        where : {idAfectacion: idAfectacion}
+        where : {id: idAfectacion}
     })
     .then(()=>{
         res.json({success:true});
