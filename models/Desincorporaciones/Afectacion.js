@@ -2,7 +2,7 @@ const sequelize = require('sequelize');
 const db = require('../../config/db');
 
 const Afectacion = db.define('Afectacion',{
-    idAfectacion:{
+    id:{
         type: sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true

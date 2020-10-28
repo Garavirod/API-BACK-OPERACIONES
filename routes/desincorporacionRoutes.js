@@ -4,10 +4,12 @@ const router = express.Router();
 const controller = require('../controllers/desincorporacionController');
 
 // POST
-//router.post('/datos-cumplimiento/:idDesincorporacion',controller.addCumplimiento_incumplimiento);
 router.post('/datos-afectacion',controller.addAfectacion);
 router.post('/datos-afectacion2',controller.addAfectacion2);
 router.post('/datos-desincorporacion',controller.registroDesincorporacion);
+router.post('/datos-incorporacion/:idFolio',controller.registroIncorporacion);
+router.post('/update-desincorporacion',controller.updateDesincorporacion);
+
 
 
 // GET

@@ -2,7 +2,6 @@ const db = require('../config/db');
 const Cumplimiento_incumplimiento = require('../models/Desincorporaciones/Cumplimiento_Incumplimiento');
 const Afectacion = require('../models/Desincorporaciones/Afectacion');
 const Desincorporacion = require('../models/Desincorporaciones/Desincorporacion');
-//const Incoporacion = require('../models/Desincorporaciones/Incorporacion');
 const Incorporacion = require('../models/Desincorporaciones/Incorporacion');
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
@@ -229,34 +228,73 @@ controllers.registroDesincorporacion = async (req, res) => {
         })
 };//registroDesincorporacion
 
-controllers.registroIncoporacion = async (req, res) => {
+controllers.registroIncorporacion = async (req, res) => {
+    const idDesinc = req.params.idFolio;
     const incorporacion = {
-        fecha: req.body.fecha,
-        hora: req.body.hora,
-        linea: req.body.linea,
-        estacion: req.body.estacion,
-        sentido: req.body.sentido,
-        status: req.body.status,
-        entrada: req.body.entrada,
-        retrazo: req.body.retrazo,
+        idDesincorporacion: idDesinc,
         informa: req.body.informa,
-        empresa: req.body.empresa,
+        estacion: req.body.estacion,
         economico: req.body.economico,
+        empresa: req.body.empresa,       
         odometro: req.body.odometro,
-        creedencial: req.body.creedencial,
-        operador: req.body.operador,
-        observaciones: req.body.observaciones,
+        credencial: req.body.credencial,
+        nombre: req.body.nombre,
+        fecha: req.body.fecha,
+        hora: req.body.hora,                       
+        sentido: req.body.sentido,
+        entrada: req.body.entrada,
+        status: req.body.status,
+        hra_retrazo: req.body.hra_retrazo,
+        min_retrazo: req.body.min_retrazo,
+        seg_retrazo: req.body.seg_retrazo,
     };
 
-    Incoporacion.create(incorporacion)
+    Incorporacion.create(incorporacion)
         .then(inc => {
-            res.json({ success: true, data: inc });
+            console.log("incorporacion created");
+            Desincorporacion.update({edoFolio:"Cerrado"}, {where: {id:idDesinc} })
+            .then(des => {
+                console.log("desincorporacin updated");
+                res.json({ success: true, data: inc });
+            })
         })
         .catch(err => {
             console.log("ERROR >:", err);
             res.json({ success: false, message: err });
         })
 };//registroIncoporacion
+
+controllers.updateDesincorporacion = async (req, res) => {
+    const desincorporacion = {  
+        id: req.body.id,
+        fecha: req.body.fecha,
+        hora: req.body.hora,
+        linea: req.body.linea,
+        estacion: req.body.estacion,
+        solicita: req.body.solicita,
+        informa: req.body.informa,
+        empresa: req.body.empresa,
+        economico: req.body.economico,
+        motivo: req.body.motivo,
+        odometro: req.body.odometro,
+        credencial: req.body.credencial,
+        nombre: req.body.nombre,
+        jornada: req.body.jornada,
+        observaciones: req.body.observaciones,
+        tipo: req.body.tipo,
+        edoFolio: req.body.edoFolio,
+    };
+
+    Desincorporacion.update(desincorporacion, {where: {id:desincorporacion.id} })
+        .then(des => {
+            console.log("desincorporacin updated");
+            res.json({ success: true, data: des });
+        })
+        .catch(err => {
+            console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+        })
+};//updateDesincorporacion
 
 // GET
 controllers.getFoliosAbiertos = async (req,res)=>{

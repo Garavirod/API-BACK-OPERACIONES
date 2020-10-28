@@ -1,9 +1,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/db');
-const Desincorporacion = require('./Desincorporacion');
 
-
-const Incorporacion = db.define("Incorporacion", {
+const Incorporacion = db.define("Incorporacion", { 
     id: {
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -15,9 +13,6 @@ const Incorporacion = db.define("Incorporacion", {
     },
     hora :{
         type:sequelize.TIME,
-    },
-    linea: {
-        type: sequelize.INTEGER
     },
     estacion: {
         type: sequelize.STRING
@@ -31,13 +26,18 @@ const Incorporacion = db.define("Incorporacion", {
     entrada: {
         type: sequelize.STRING
     },
-    retrazo :{
-        type:sequelize.TIME,
+    hra_retrazo :{
+        type: sequelize.INTEGER,
+    },
+    min_retrazo: {
+        type: sequelize.INTEGER,
+    },
+    seg_retrazo: {
+        type: sequelize.INTEGER,
     },
     informa: {
         type: sequelize.STRING
     },
-    
     empresa: {
         type: sequelize.STRING
     },
@@ -47,34 +47,15 @@ const Incorporacion = db.define("Incorporacion", {
     odometro: {
         type: sequelize.STRING
     },
-    creedencial: {
+    credencial: {
         type: sequelize.STRING
     },
-    operador: {
-        type: sequelize.STRING
-    },
-    observaciones: {
+    nombre: {
         type: sequelize.STRING
     }
     
 });
 
-/*
-Incorporacion.hasOne(
-    Desincorporacion,{        
-        foreignKey : 'fk_desincorporacion',
-        onDelete:'cascade', 
-        onUpdate:'cascade',
-    }
-);
-
-Desincorporacion.belongsTo(
-    Incorporacion,{        
-        foreignKey : 'fk_desincorporacion',
-        onDelete:'cascade', 
-        onUpdate:'cascade',
-    }
-);*/
 
 
 module.exports = Incorporacion;
