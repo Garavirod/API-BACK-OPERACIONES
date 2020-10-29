@@ -383,20 +383,33 @@ controllers.getIncoporaciones = async (req,res)=>{
 }//getIncoporaciones
 
 /**
- * Retorna todos los regitros de una desincorporacion de tipo Incumplimiento
+ * Retorna todos los regitros de una desincorporacion 
+ * de tipo Incumplimiento o Apoyo
  */
 controllers.getIncumplimientos = async (req, res)=>{
+    let _tipo=null;
+    switch (req.params.tipoDesinc) {
+        case "inc":
+            _tipo = "Incumplido";
+            break;
+        case "apo":
+            _tipo = "Apoyo";
+            break;
+        default:
+            res.json({success:false, message:"No data"});
+            break;
+    }    
     await Desincorporacion.findAll({
         attributes:["id","fecha","hora","motivo","jornada","estacion","linea","observaciones"],
         include:[ 
             {   model:Cumplimiento_incumplimiento, 
                 where:
                 {
-                    tipo:'Incumplido'
-                }
+                    tipo:_tipo
+                },
             }           
         ],
-        group:["fecha"]            
+        order:["fecha"],        
     })
     .then(obj=>{
         res.json({success:true, data:obj});
@@ -405,6 +418,8 @@ controllers.getIncumplimientos = async (req, res)=>{
         res.json({success:false, message:err});
     })
 }
+
+
 
 // DELETE
 controllers.deleteCumplimiento_incumplimiento = async (req,res)=>{
