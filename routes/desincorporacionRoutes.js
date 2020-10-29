@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const controller = require('../controllers/desincorporacionController');
+const controllers = require('../controllers/desincorporacionController');
 
 // POST
 router.post('/datos-afectacion',controller.addAfectacion);
@@ -19,6 +20,7 @@ router.get('/cumplimientos-list',controller.getCumplimiento_incumplimientos);
 router.get('/afectaciones-list',controller.getAfectaciones);
 router.get('/one-cumplimiento',controller.getOneCumplimiento_incumplimiento);
 router.get('/one-afectacion',controller.getOneAfectacion);
+router.get('/incumplimientos-list',controllers.getIncumplimientos);
 
 // DELETE
 router.delete('/delete-cumplimiento/:idCumIncum',controller.deleteCumplimiento_incumplimiento);
