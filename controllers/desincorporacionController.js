@@ -3,6 +3,8 @@ const Cumplimiento_incumplimiento = require('../models/Desincorporaciones/Cumpli
 const Afectacion = require('../models/Desincorporaciones/Afectacion');
 const Desincorporacion = require('../models/Desincorporaciones/Desincorporacion');
 const Incorporacion = require('../models/Desincorporaciones/Incorporacion');
+const sequelize = require('../config/db');
+const Op =  require("sequelize").Op;
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
@@ -384,9 +386,11 @@ controllers.getIncoporaciones = async (req,res)=>{
 
 /**
  * Retorna todos los regitros de una desincorporacion 
- * de tipo Incumplimiento o Apoyo
+ * de tipo Incumplimiento o Apoyo pero que todos sean
+ * de tipo cerrado o cerrado sin incorporar
  */
 controllers.getIncumplimientos = async (req, res)=>{
+    
     let _tipo=null;
     switch (req.params.tipoDesinc) {
         case "inc":
@@ -395,7 +399,7 @@ controllers.getIncumplimientos = async (req, res)=>{
         case "apo":
             _tipo = "Apoyo";
             break;
-        default:
+        default:            
             res.json({success:false, message:"No data"});
             break;
     }    
@@ -403,18 +407,21 @@ controllers.getIncumplimientos = async (req, res)=>{
         attributes:["id","fecha","hora","motivo","jornada","estacion","linea","observaciones"],
         include:[ 
             {   model:Cumplimiento_incumplimiento, 
-                where:
-                {
-                    tipo:_tipo
-                },
+                where:{tipo:_tipo}
             }           
         ],
-        order:["fecha"],        
+        where:{
+            edoFolio:{
+                [Op.or]:["Cerrado","Cerrado sin incorporar"]
+            }
+        },
+        order:["fecha"] 
     })
     .then(obj=>{
         res.json({success:true, data:obj});
     })
     .catch(err=>{
+        console.log(err);
         res.json({success:false, message:err});
     })
 }
