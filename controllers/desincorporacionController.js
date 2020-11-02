@@ -386,8 +386,8 @@ controllers.getIncoporaciones = async (req,res)=>{
 
 /**
  * Retorna todos los regitros de una desincorporacion 
- * de tipo Incumplimiento o Apoyo pero que todos sean
- * de tipo cerrado o cerrado sin incorporar
+ * de tipo Incumplimiento o Apoyo toamando en cuenta que todos
+ * los registros sean de tipo cerrado o cerrado sin incorporar
  */
 controllers.getIncumplimientos = async (req, res)=>{
     
@@ -426,6 +426,55 @@ controllers.getIncumplimientos = async (req, res)=>{
     })
 }
 
+/* 
+    Trae la suma del kilometraje total agrupado por fechas
+ */
+controllers.getKilometrajeByFecha = async (req,res) =>{
+    let _tipo=null;
+    // Asigna a tipo el tipo de resigistros que se desean obtener
+    switch (req.params.tipoDesinc) {
+        case "inc":
+            _tipo = "Incumplido";
+            break;
+        case "apo":
+            _tipo = "Apoyo";
+            break;
+        default:            
+            res.json({success:false, message:"No data"});
+            break;
+    }    
+    await Desincorporacion.findAll({
+        attributes:[
+            "id",
+            "fecha",
+            [
+                sequelize.fn(
+                    'sum',sequelize.col('kilometraje')
+                ),
+                'km_total'
+            ]
+        ],
+        include:[ 
+            {   model:Cumplimiento_incumplimiento,               
+                where:{tipo:_tipo},
+                attributes:[]
+            }           
+        ],
+        where:{
+            edoFolio:{
+                [Op.or]:["Cerrado","Cerrado sin incorporar"]
+            }
+        },
+        group:["fecha"] 
+    })
+    .then(obj=>{
+        res.json({success:true, data:obj});
+    })
+    .catch(err=>{
+        console.log(err);
+        res.json({success:false, message:err});
+    })
+};
 
 
 // DELETE

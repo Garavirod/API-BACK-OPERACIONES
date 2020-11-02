@@ -20,7 +20,8 @@ router.get('/cumplimientos-list',controller.getCumplimiento_incumplimientos);
 router.get('/afectaciones-list',controller.getAfectaciones);
 router.get('/one-cumplimiento',controller.getOneCumplimiento_incumplimiento);
 router.get('/one-afectacion',controller.getOneAfectacion);
-router.get('/incumplimientos-list/:tipoDesinc',controllers.getIncumplimientos);
+router.get('/registros-list/:tipoDesinc',controllers.getIncumplimientos);
+router.get('/kilometrajes-fecha/:tipoDesinc',controllers.getKilometrajeByFecha);
 
 // DELETE
 router.delete('/delete-cumplimiento/:idCumIncum',controller.deleteCumplimiento_incumplimiento);
