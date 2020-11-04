@@ -354,6 +354,7 @@ controllers.getAfectaciones = async (req,res)=>{
     })
 }//getAfectaciones
 
+
 controllers.addMotivo = async(req,res)=>{
     const _Motivos = {
         motivo: req.body.motivo
@@ -431,7 +432,7 @@ controllers.getIncoporaciones = async (req,res)=>{
  * de tipo Incumplimiento o Apoyo toamando en cuenta que todos
  * los registros sean de tipo cerrado o cerrado sin incorporar
  */
-controllers.getIncumplimientos = async (req, res)=>{
+controllers.getFoliosDataBrief = async (req, res)=>{
     
     let _tipo=null;
     switch (req.params.tipoDesinc) {
@@ -441,6 +442,9 @@ controllers.getIncumplimientos = async (req, res)=>{
         case "apo":
             _tipo = "Apoyo";
             break;
+        case "afe":
+            _tipo = "Afectación"
+            break;
         default:            
             res.json({success:false, message:"No data"});
             break;
@@ -448,14 +452,16 @@ controllers.getIncumplimientos = async (req, res)=>{
     await Desincorporacion.findAll({
         attributes:["id","fecha","hora","motivo","jornada","estacion","linea","observaciones"],
         include:[ 
-            {   model:Cumplimiento_incumplimiento, 
-                where:{tipo:_tipo}
-            }           
+            {   
+                model:Cumplimiento_incumplimiento,
+                // where:{tipo:_tipo}                 
+            }              
         ],
         where:{
             edoFolio:{
                 [Op.or]:["Cerrado","Cerrado sin incorporar"]
-            }
+            },
+            tipo:_tipo
         },
         order:["fecha"] 
     })
