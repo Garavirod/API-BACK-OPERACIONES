@@ -10,7 +10,8 @@ router.post('/datos-afectacion2',controller.addAfectacion2);
 router.post('/datos-desincorporacion',controller.registroDesincorporacion);
 router.post('/datos-incorporacion/:idFolio',controller.registroIncorporacion);
 router.post('/update-desincorporacion',controller.updateDesincorporacion);
-
+router.post('/datos-motivo',controllers.addMotivo);
+router.post('/datos-informante',controllers.addInformante);
 
 
 // GET
@@ -22,6 +23,8 @@ router.get('/one-cumplimiento',controller.getOneCumplimiento_incumplimiento);
 router.get('/one-afectacion',controller.getOneAfectacion);
 router.get('/registros-list/:tipoDesinc',controllers.getIncumplimientos);
 router.get('/kilometrajes-fecha/:tipoDesinc',controllers.getKilometrajeByFecha);
+router.get('/motivos-list',controllers.getMotivo);
+router.get('/informante-list',controllers.getInformante);
 
 // DELETE
 router.delete('/delete-cumplimiento/:idCumIncum',controller.deleteCumplimiento_incumplimiento);

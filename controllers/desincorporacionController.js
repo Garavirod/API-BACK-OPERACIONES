@@ -5,6 +5,8 @@ const Desincorporacion = require('../models/Desincorporaciones/Desincorporacion'
 const Incorporacion = require('../models/Desincorporaciones/Incorporacion');
 const sequelize = require('../config/db');
 const Op =  require("sequelize").Op;
+const Informantes = require('../models/Desincorporaciones/Informantes');
+const Motivos = require('../models/Desincorporaciones/Motivos');
 const controllers = {};
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
@@ -352,6 +354,46 @@ controllers.getAfectaciones = async (req,res)=>{
     })
 }//getAfectaciones
 
+controllers.addMotivo = async(req,res)=>{
+    const _Motivos = {
+        motivo: req.body.motivo
+    };
+
+    Motivos.create(_Motivos)
+    .then(col=>{
+        res.json({ success: true, data: col });
+    })
+    .catch(err=>{
+        console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+    });
+};
+controllers.addInformante = async(req,res)=>{
+    const _Informantes = {
+        motivo: req.body.motivo
+    };
+
+    Motivos.create(_Informantes)
+    .then(col=>{
+        res.json({ success: true, data: col });
+    })
+    .catch(err=>{
+        console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+    });
+};
+
+// GET
+controllers.getMotivo = async (req,res)=>{
+    await Motivos.findAll()
+    .then(obj=>{
+        res.json({success:true, data:obj});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}//getAfectaciones
+
     //getOne
 controllers.getOneAfectacion = async(req, res) => {
     await Afectacion.findOne({ where: { id: req.body.idAfectacion } })
@@ -467,6 +509,9 @@ controllers.getKilometrajeByFecha = async (req,res) =>{
         },
         group:["fecha"] 
     })
+}
+controllers.getInformante = async (req,res)=>{
+    await Informantes.findAll()
     .then(obj=>{
         res.json({success:true, data:obj});
     })
@@ -508,7 +553,25 @@ controllers.borraIncorporacion = async (req,res)=>{
     const id_incorporacion = req.params.idIncorporacion;
     await Incorporacion.destroy({ 
         where : {
-            id: id_incorporacion
+            id: id_incorporacion            
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
+
+// DELETE
+
+
+controllers.deleteMotivo = async (req,res)=>{
+    const id_Motivos = req.params.idMotivo;
+    await Motivos.destroy({ 
+        where : {
+            id: id_Motivos
         }
     })
     .then(()=>{
@@ -524,6 +587,15 @@ controllers.borraDesincorporacion = async (req,res)=>{
     await Incorporacion.destroy({ 
         where : {
             id: id_desincorporacion
+        }
+    })
+}
+
+controllers.deleteInformante = async (req,res)=>{
+    const id_Informantes = req.params.idInformante;
+    await Informantes.destroy({ 
+        where : {
+            id: id_Informantes
         }
     })
     .then(()=>{
