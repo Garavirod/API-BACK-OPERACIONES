@@ -450,7 +450,7 @@ controllers.getFoliosDataBrief = async (req, res)=>{
             break;
     }    
     await Desincorporacion.findAll({
-        attributes:["id","fecha","hora","motivo","jornada","estacion","linea","observaciones","tipo"],
+        attributes:["id","fecha","hora","empresa","motivo","jornada","estacion","linea","observaciones","tipo"],
         include:[ 
             {   
                 model:Cumplimiento_incumplimiento,
