@@ -19,7 +19,7 @@ router.get('/folios-abiertos',controller.getFoliosAbiertos);
 //router.get('/one-desincorporacion/:idDesincorporacion',controller.getOneDesincorporacion);
 router.get('/cumplimientos-list',controller.getCumplimiento_incumplimientos);
 router.get('/afectaciones-list',controller.getAfectaciones);
-router.get('/one-cumplimiento',controller.getOneCumplimiento_incumplimiento);
+router.get('/cumplimiento-incumplimiento-folio/:idFolio',controller.getCumIncumsDeFolio);
 router.get('/one-afectacion',controller.getOneAfectacion);
 router.get('/registros-desinc-list/:tipoDesinc',controllers.getFoliosDataBrief);
 router.get('/kilometrajes-fecha/:tipoDesinc',controllers.getKilometrajeByFecha);

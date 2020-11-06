@@ -332,16 +332,17 @@ controllers.getCumplimiento_incumplimientos = async (req,res)=>{
 }//getCumplimiento_incumplimientos
 
     //getOne
-controllers.getOneCumplimiento_incumplimiento = async(req, res) => {
-    await Cumplimiento_incumplimiento.findOne({ where: { id: req.body.idIncum } })
+controllers.getCumIncumsDeFolio = async(req, res) => {
+    await Cumplimiento_incumplimiento.findAll({ where: { idDesincorporacion: req.params.idFolio } })
         .then(cumplIncum => {
-                log("cumplimiento_incumplimiento found");
-                res.json({ success: true, data: cumplIncum });
+            //console.log(cumplIncum);
+            console.log("cumplimiento_incumplimiento found");
+            res.json({ success: true, data: cumplIncum });
         })
         .catch((err) => {
             res.json({success:false, message:err});
         });
-};//getOneCumplimiento_incumplimiento
+};//getCumIncumsDeFolio
 
 
 controllers.getAfectaciones = async (req,res)=>{
