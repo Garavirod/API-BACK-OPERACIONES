@@ -332,16 +332,17 @@ controllers.getCumplimiento_incumplimientos = async (req,res)=>{
 }//getCumplimiento_incumplimientos
 
     //getOne
-controllers.getOneCumplimiento_incumplimiento = async(req, res) => {
-    await Cumplimiento_incumplimiento.findOne({ where: { id: req.body.idIncum } })
+controllers.getCumIncumsDeFolio = async(req, res) => {
+    await Cumplimiento_incumplimiento.findAll({ where: { idDesincorporacion: req.params.idFolio } })
         .then(cumplIncum => {
-                log("cumplimiento_incumplimiento found");
-                res.json({ success: true, data: cumplIncum });
+            //console.log(cumplIncum);
+            console.log("cumplimiento_incumplimiento found");
+            res.json({ success: true, data: cumplIncum });
         })
         .catch((err) => {
             res.json({success:false, message:err});
         });
-};//getOneCumplimiento_incumplimiento
+};//getCumIncumsDeFolio
 
 
 controllers.getAfectaciones = async (req,res)=>{
@@ -353,6 +354,7 @@ controllers.getAfectaciones = async (req,res)=>{
         res.json({success:false, message:err});
     })
 }//getAfectaciones
+
 
 controllers.addMotivo = async(req,res)=>{
     const _Motivos = {
@@ -431,7 +433,7 @@ controllers.getIncoporaciones = async (req,res)=>{
  * de tipo Incumplimiento o Apoyo toamando en cuenta que todos
  * los registros sean de tipo cerrado o cerrado sin incorporar
  */
-controllers.getIncumplimientos = async (req, res)=>{
+controllers.getFoliosDataBrief = async (req, res)=>{
     
     let _tipo=null;
     switch (req.params.tipoDesinc) {
@@ -441,21 +443,26 @@ controllers.getIncumplimientos = async (req, res)=>{
         case "apo":
             _tipo = "Apoyo";
             break;
+        case "afe":
+            _tipo = "Afectación"
+            break;
         default:            
             res.json({success:false, message:"No data"});
             break;
     }    
     await Desincorporacion.findAll({
-        attributes:["id","fecha","hora","motivo","jornada","estacion","linea","observaciones"],
+        attributes:["id","fecha","hora","empresa","motivo","jornada","estacion","linea","observaciones","tipo"],
         include:[ 
-            {   model:Cumplimiento_incumplimiento, 
-                where:{tipo:_tipo}
-            }           
+            {   
+                model:Cumplimiento_incumplimiento,
+                // where:{tipo:_tipo}                 
+            }              
         ],
         where:{
             edoFolio:{
                 [Op.or]:["Cerrado","Cerrado sin incorporar"]
-            }
+            },
+            tipo:_tipo
         },
         order:["fecha"] 
     })
