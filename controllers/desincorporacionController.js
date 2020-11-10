@@ -310,16 +310,28 @@ controllers.getFoliosAbiertos = async (req,res)=>{
         res.json({success:false, message:err});
     });
 }//getFoliosAbiertos
-/*
-controllers.getOneDesincorporacion = async (req,res)=>{
-    await Desincorporacion.findOne({ where: { id: req.params.idDesincorporacion} })
-    .then(foundDes=>{
-        res.json({success:true, data:foundDes});
+
+
+controllers.getFoliosById = async (req,res) =>{
+    const _idFolio = req.params.idFolio;
+    await Desincorporacion.findOne({       
+        include:[ 
+            {   
+                model:Cumplimiento_incumplimiento                                
+            }              
+        ],
+        where:{
+            id:_idFolio
+        },
+    })
+    .then(obj=>{
+        res.json({success:true, data:obj});
     })
     .catch(err=>{
+        console.log(err);
         res.json({success:false, message:err});
-    });
-}//getOneDesincorporacion*/
+    })
+}
 
 controllers.getCumplimiento_incumplimientos = async (req,res)=>{
     await Cumplimiento_incumplimiento.findAll()
@@ -612,6 +624,22 @@ controllers.deleteInformante = async (req,res)=>{
         res.json({success:false, message:err});
     })
 }//borraDesincorporacion
+
+
+controllers.deleteFolio = async (req,res)=>{
+    const _idFolio = req.params.idFolio;
+    await Desincorporacion.destroy({ 
+        where : {
+            id: _idFolio
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
 
 
 module.exports = controllers;

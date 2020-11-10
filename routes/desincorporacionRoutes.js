@@ -16,7 +16,6 @@ router.post('/datos-informante',controllers.addInformante);
 
 // GET
 router.get('/folios-abiertos',controller.getFoliosAbiertos);
-//router.get('/one-desincorporacion/:idDesincorporacion',controller.getOneDesincorporacion);
 router.get('/cumplimientos-list',controller.getCumplimiento_incumplimientos);
 router.get('/afectaciones-list',controller.getAfectaciones);
 router.get('/cumplimiento-incumplimiento-folio/:idFolio',controller.getCumIncumsDeFolio);
@@ -25,9 +24,11 @@ router.get('/registros-desinc-list/:tipoDesinc',controllers.getFoliosDataBrief);
 router.get('/kilometrajes-fecha/:tipoDesinc',controllers.getKilometrajeByFecha);
 router.get('/motivos-list',controllers.getMotivo);
 router.get('/informante-list',controllers.getInformante);
+router.get('/getfolio/:idFolio',controllers.getFoliosById);
 
 // DELETE
 router.delete('/delete-cumplimiento/:idCumIncum',controller.deleteCumplimiento_incumplimiento);
 router.delete('/delete-afectacion/:idAfectacion',controller.deleteAfectacion);
+router.delete('/delete-folio/:idFolio',controllers.deleteFolio);
 
 module.exports = router;
