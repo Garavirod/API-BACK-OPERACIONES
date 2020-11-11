@@ -9,9 +9,10 @@ router.post('/datos-afectacion',controller.addAfectacion);
 router.post('/datos-afectacion2',controller.addAfectacion2);
 router.post('/datos-desincorporacion',controller.registroDesincorporacion);
 router.post('/datos-incorporacion/:idFolio',controller.registroIncorporacion);
-router.post('/update-desincorporacion',controller.updateDesincorporacion);
 router.post('/datos-motivo',controllers.addMotivo);
 router.post('/datos-informante',controllers.addInformante);
+router.post('/update-folio-cumpinc/:idFolio',controllers.updateFolioIncumOrApoyo);
+router.post('/update-desincorporacion',controller.updateDesincorporacion);
 
 
 // GET
