@@ -147,6 +147,8 @@ controllers.addAfectacion2 = async(req,res)=>{
 
 };//addAfectacion2
 
+
+
 controllers.registroDesincorporacion = async (req, res) => {    
     console.log(req.body);
     const desincorporacion = {  
