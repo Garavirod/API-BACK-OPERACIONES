@@ -8,6 +8,7 @@ const controllers = {};
 
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
+// DatosAmbulancia.drop();
 
 /**
  * POST
@@ -132,8 +133,7 @@ controllers.registroDatosAmbulancia = async (req, res) => {
         ambulancia: req.body.ambulancia,
         ecoPlaca: req.body.ecoPlaca,
         paramedico: req.body.paramedico,
-        diagnostico: req.body.diagnostico,
-        fk_afectado: req.body.idAfectado,
+        diagnostico: req.body.diagnostico,        
     };
 
     DatosAmbulancia.create(datosAmbulancia)

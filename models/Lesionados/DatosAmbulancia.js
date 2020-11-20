@@ -35,15 +35,15 @@ const DatosAmbulancia = db.define("DatosAmbulancia",{
 });
 
 // 1 - 1
-DatosAmbulancia.belongsTo(
-    Afectado,
-    {
-        as :"afectado",
-        foreignKey : 'fk_afectado',
-        onDelete:'cascade', 
-        onUpdate:'cascade',
-    }
-);
+// DatosAmbulancia.belongsTo(
+//     Afectado,
+//     {
+//         as :"afectado",
+//         foreignKey : 'fk_afectado',
+//         onDelete:'cascade', 
+//         onUpdate:'cascade',
+//     }
+// );
 
 // N - M 
 
