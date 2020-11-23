@@ -3,6 +3,7 @@ const Colision = require('../models/Colisiones/Colision');
 const DatosSeguroColision = require('../models/Colisiones/DatosSeguroColision');
 const Lesionado = require('../models/Colisiones/Lesionado');
 const DatosAutomovil = require('../models/Colisiones/DatosAutomovil');
+const EconomicoColisionado = require('../models/Colisiones/EconomicoColisionado');
 const controllers = {};
 
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
@@ -28,6 +29,24 @@ controllers.addColision = async(req,res)=>{
             res.json({ success: false, message: err });
     });
 };
+
+
+controllers.addEconomicoColisionado = async(req,res)=>{
+    const _economicoColision = {
+        empresa: req.body.empresa,
+        economico: req.body.economico,     
+        fk_colision: req.params.idColision,
+    };
+
+    EconomicoColisionado.create(_economicoColision)
+    .then(ecCol=>{
+        res.json({ success: true, data: ecCol });
+    })
+    .catch(err=>{
+        console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+    });
+};//addEconomicoColisionado
 
 
 controllers.addSeguro = async(req,res)=>{
@@ -91,7 +110,11 @@ controllers.addAutomovil = async(req,res)=>{
 
 // GET
 controllers.getColisiones = async (req,res)=>{
-    await Colision.findAll()
+    await Colision.findAll({
+        order:[
+            ["id", "DESC"]
+        ] 
+    })
     .then(obj=>{
         res.json({success:true, data:obj});
     })
@@ -99,6 +122,20 @@ controllers.getColisiones = async (req,res)=>{
         res.json({success:false, message:err});
     })
 }
+
+controllers.getEconomicos = async(req, res) => {
+    await EconomicoColisionado. findAll({
+        where:{
+            fk_colision: req.params.idColision
+        }
+    })
+    .then(economicos =>{
+        res.json({success: true, data: economicos});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    });
+}//getEconomicos
 
 
 controllers.getAutomovil = async (req,res) =>{
@@ -161,6 +198,21 @@ controllers.deleteColision = async (req,res)=>{
         res.json({success:false, message:err});
     })
 }
+
+controllers.deleteEconomico = async( req, res) =>{
+    const id_Economico = req.params.idEconomico;
+    await EconomicoColisionado.destroy(
+        {
+            where:{id:id_Economico}
+        }
+    )
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+};//deleteEconomico
 
 controllers.deleteLesionado = async( req, res) =>{
     const id_lesionado = req.params.idlesionado;

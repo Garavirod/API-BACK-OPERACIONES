@@ -2,6 +2,7 @@ const sequelize = require('sequelize');
 const db = require('../../config/db');
 const Lesionado = require('./Lesionado');
 const DatosAutomovil = require('./DatosAutomovil');
+const EconomicoColisionado = require('./EconomicoColisionado');
 
 const Colision = db.define('Colision',{
     id: {
@@ -49,6 +50,15 @@ Colision.hasMany(
     DatosAutomovil,
     {
         
+        foreignKey : 'fk_colision',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
+Colision.hasMany(
+    EconomicoColisionado,
+    {
         foreignKey : 'fk_colision',
         onDelete:'cascade', 
         onUpdate:'cascade',
