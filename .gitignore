@@ -1,3 +1,4 @@
 # Dependency directory
 # https://docs.npmjs.com/cli/shrinkwrap#caveats
+.DS_STORE
 node_modules
