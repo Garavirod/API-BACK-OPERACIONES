@@ -137,6 +137,31 @@ controllers.getEconomicos = async(req, res) => {
     });
 }//getEconomicos
 
+controllers.getColEmpresaTiempo = async(req, res) => {
+
+    await Colision. findAll({
+        attributes: ['id', 'fecha'],
+        where: {
+            /* podría ir filtro de la fecha */
+        },
+        include: [{
+            model: EconomicoColisionado,
+            attributes: ['empresa', 'fk_colision'],
+            where: {
+                empresa: req.params.empresa
+            }
+        }]
+    })
+    .then(colEmpresa =>{
+        //console.log("good", colEmpresa);
+        res.json({success: true, data: colEmpresa});
+    })
+    .catch(err=>{
+        console.log("err", err);
+        res.json({success:false, message:err});
+    });
+}//getColEmpresaTiempo
+
 
 controllers.getAutomovil = async (req,res) =>{
     await DatosAutomovil.findAll({where:{
