@@ -162,6 +162,21 @@ controllers.getColEmpresaTiempo = async(req, res) => {
     });
 }//getColEmpresaTiempo
 
+controllers.getEmpresasColisionadas = async(req, res) => {
+    await EconomicoColisionado.findAll({
+        attributes: ['empresa'],
+        group: ['empresa']
+    })
+    .then(empresas =>{
+        //console.log("good", empresas);
+        res.json({success: true, data: empresas});
+    })
+    .catch(err=>{
+        //console.log("err", err);
+        res.json({success:false, message:err});
+    });
+}//getEmpresasColisionadas
+
 
 controllers.getAutomovil = async (req,res) =>{
     await DatosAutomovil.findAll({where:{
