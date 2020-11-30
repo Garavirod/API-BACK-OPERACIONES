@@ -9,6 +9,7 @@ router.post("/registro-trasladoHospital/:idAfectado",controllers.registroTraslad
 router.post("/registro-datosSeguro/:idEvento",controllers.registroDatosSeguro);
 router.post("/registro-evento",controllers.registroEvento);
 router.post("/registro-datosAmbulancia/:idEvento",controllers.registroDatosAmbulancia);
+router.post("/registro-afectado-traslado/:idEvento",controllers.addAfectadoTraslado);
 router.get("/eventos", controllers.getEventos);
 router.get("/afectados/:idEvento",controllers.getAfectados);
 router.get("/datoseguros/:idEvento", controllers.getDatosSeguro);

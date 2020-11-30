@@ -8,6 +8,7 @@ const controllers = {};
 
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
+// DatosAmbulancia.drop();
 
 /**
  * POST
@@ -24,7 +25,7 @@ controllers.registroAfectado = async (req, res) => {
     };
 
     Afectado.create(afectado)
-        .then(afe => {
+        .then(afe => {            
             res.json({ success: true, data: afe });
         })
         .catch(err => {
@@ -32,6 +33,35 @@ controllers.registroAfectado = async (req, res) => {
             res.json({ success: false, message: err });
         })
 };
+
+
+controllers.addAfectadoTraslado = async(req,res) =>{
+    const _idEvento = req.params.idEvento;
+    const afectado = {
+        sexo: req.body.sexo,
+        edad: req.body.edad,
+        nombre: req.body.nombre,
+        status: req.body.status,
+        fk_evento:_idEvento,
+    };
+
+    const traslado = {
+        nombreHospital: req.body.nombreHospital,
+        paseMedico: req.body.paseMedico,
+    }
+
+    Afectado.create(afectado)
+    .then(afe => {
+        afe.createTrasladoHospital(traslado).then(()=>{
+            res.json({ success: true, data: afe });
+        })          
+    })
+    .catch(err => {
+        console.log("ERROR >:", err);
+        res.json({ success: false, message: err });
+    })
+};
+
 
 controllers.registroTrasladoHospital = async (req, res) => {    
     const trasladoHospital = {        
@@ -103,8 +133,7 @@ controllers.registroDatosAmbulancia = async (req, res) => {
         ambulancia: req.body.ambulancia,
         ecoPlaca: req.body.ecoPlaca,
         paramedico: req.body.paramedico,
-        diagnostico: req.body.diagnostico,
-        fk_afectado: req.body.idAfectado,
+        diagnostico: req.body.diagnostico,        
     };
 
     DatosAmbulancia.create(datosAmbulancia)

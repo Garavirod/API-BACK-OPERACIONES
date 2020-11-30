@@ -14,49 +14,11 @@ db.sync({force:false});
 Cumplimiento_incumplimiento.drop();
 Incorporacion.drop();
 Desincorporacion.drop();*/
-// POST
-/*
-controllers.addCumplimiento_incumplimiento = async(req,res)=>{
-    const _cumpIncum = {
-        idDesincorporacion: req.params.idDesincorporacion, //FK
-        referencia: req.body.ruta_referencia,
-        ida: req.body.ref_ida,
-        numVueltas:req.body.num_vuelta,
-        numIdas: req.body.num_ida,
-        numRegresos:req.body.num_regreso,
-        tramoDesde: req.body.tramo_desde,
-        tramoHasta: req.body.tramo_hasta,
-        kilometraje: req.body.kilometraje,
-        tipo: req.body.tipo
-    };//_cumpIncum
 
-    Cumplimiento_incumplimiento.create(_cumpIncum)
-    .then(col=>{
-        console.log("Cumplimiento successfuly added");
-        //add afectacion
-        const _afectacion = {
-            kilometraje: col.dataValues.kilometraje,
-            //fk
-            reg_cum_inc: col.dataValues.idIncum,
-        };//_afectacion
-    
-        Afectacion.create(_afectacion)
-        .then(af=>{
-            console.log("Afectacion successfuly added");
-        })
-        .catch(err=>{
-            console.log("ERROR >:", err);
-                res.json({ success: false, message: err });
-        });//createAfectacion
-
-        res.json({ success: true, data: col });
-    })
-    .catch(err=>{
-        console.log("ERROR >:", err);
-            res.json({ success: false, message: err });
-    });//create
-
-}; //addCumpl*/
+/*  ------------------------------
+    ------------POST--------------
+    ------------------------------
+*/
 
 /* Afectacion is added inmediately after the Cumplimiento_Incumplimiento is added,
 since it's idCumplimiento_Incumplimiento is needed for the Afectacion*/
@@ -114,6 +76,7 @@ controllers.addAfectacion = async(req,res)=>{
 
 };//addAfectacion
 
+// Este controlador V2 agrega una afecatacion cuadno hay cumlimientos e incumplimientos
 controllers.addAfectacion2 = async(req,res)=>{
     const [desincorporacion, valRef1, valRef2] = req.body;
 
@@ -184,8 +147,9 @@ controllers.addAfectacion2 = async(req,res)=>{
 
 };//addAfectacion2
 
-controllers.registroDesincorporacion = async (req, res) => {
-    //console.log("el body");
+
+
+controllers.registroDesincorporacion = async (req, res) => {    
     console.log(req.body);
     const desincorporacion = {  
         fecha: req.body.fecha,
@@ -232,6 +196,67 @@ controllers.registroDesincorporacion = async (req, res) => {
         })
 };//registroDesincorporacion
 
+
+/*  
+    Actualización de datos de una desincorporación que sea de apoyo 
+    o incumplimiento
+*/
+
+controllers.updateFolioIncumOrApoyo = async(req,res)=>{
+
+    const _idfolio = req.params.idFolio;
+    const _desincFolio = await Desincorporacion.findOne({where:{id:_idfolio}});
+    
+
+    const desincorporacion = {  
+        fecha: req.body.fecha,
+        hora: req.body.hora,
+        linea: req.body.linea,
+        estacion: req.body.estacion,
+        solicita: req.body.solicita,
+        informa: req.body.informa,
+        empresa: req.body.empresa,
+        economico: req.body.economico,
+        motivo: req.body.motivo,
+        odometro: req.body.odometro,
+        credencial: req.body.credencial,
+        nombre: req.body.nombre,
+        jornada: req.body.jornada,
+        observaciones: req.body.observaciones,
+        tipo: req.body.tipo,
+        edoFolio: req.body.edoFolio,
+    };
+
+    const _cumpIncum = {
+        ruta_referencia: req.body.ruta_referencia,
+        ref_ida: req.body.ref_ida,
+        num_vuelta:req.body.num_vuelta,
+        num_ida: req.body.num_ida,
+        num_regreso:req.body.num_regreso,
+        tramo_desde: req.body.tramo_desde,
+        tramo_hasta: req.body.tramo_hasta,
+        kilometraje: req.body.kilometraje,
+        tipo: req.body.tipo
+    };//_cumpIncum
+
+
+    _desincFolio.update(desincorporacion)
+    .then(desinc=>{          
+        Cumplimiento_incumplimiento.update(_cumpIncum,{where:{idDesincorporacion:_idfolio}})                         
+        .then(() =>{            
+            res.json({ success: true, data: desinc });
+        })       
+    })
+    .catch(err=>{        
+        res.json({ success: false, message:"Error on save! >:"+err });
+    });
+};
+
+
+
+/* 
+    Registra los datos de una incorporación
+*/
 controllers.registroIncorporacion = async (req, res) => {
     const idDesinc = req.params.idFolio;
     const incorporacion = {
@@ -291,7 +316,7 @@ controllers.updateDesincorporacion = async (req, res) => {
 
     Desincorporacion.update(desincorporacion, {where: {id:desincorporacion.id} })
         .then(des => {
-            console.log("desincorporacin updated");
+            console.log("desincorporacion updated");
             res.json({ success: true, data: des });
         })
         .catch(err => {
@@ -300,9 +325,50 @@ controllers.updateDesincorporacion = async (req, res) => {
         })
 };//updateDesincorporacion
 
-// GET
+
+controllers.addMotivo = async(req,res)=>{
+    const _Motivos = {
+        motivo: req.body.motivo
+    };
+
+    Motivos.create(_Motivos)
+    .then(col=>{
+        res.json({ success: true, data: col });
+    })
+    .catch(err=>{
+        console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+    });
+};
+controllers.addInformante = async(req,res)=>{
+    const _Informantes = {
+        motivo: req.body.motivo
+    };
+
+    Motivos.create(_Informantes)
+    .then(col=>{
+        res.json({ success: true, data: col });
+    })
+    .catch(err=>{
+        console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+    });
+};
+
+
+/*  ------------------------------
+    ------------GET---------------
+    ------------------------------
+*/
+
+
 controllers.getFoliosAbiertos = async (req,res)=>{
-    await Desincorporacion.findAll({ where: { edoFolio: "Abierto" } })
+    await Desincorporacion.findAll(
+        { 
+            where: { edoFolio: "Abierto" }, 
+            order:[["id","DESC"]] //Las más recientes al inicio
+        }
+    )
     .then(foundFolios=>{
         res.json({success:true, data:foundFolios});
     })
@@ -310,16 +376,28 @@ controllers.getFoliosAbiertos = async (req,res)=>{
         res.json({success:false, message:err});
     });
 }//getFoliosAbiertos
-/*
-controllers.getOneDesincorporacion = async (req,res)=>{
-    await Desincorporacion.findOne({ where: { id: req.params.idDesincorporacion} })
-    .then(foundDes=>{
-        res.json({success:true, data:foundDes});
+
+
+controllers.getFoliosById = async (req,res) =>{
+    const _idFolio = req.params.idFolio;
+    await Desincorporacion.findOne({       
+        include:[ 
+            {   
+                model:Cumplimiento_incumplimiento                                
+            }              
+        ],
+        where:{
+            id:_idFolio
+        },
+    })
+    .then(obj=>{
+        res.json({success:true, data:obj});
     })
     .catch(err=>{
+        console.log(err);
         res.json({success:false, message:err});
-    });
-}//getOneDesincorporacion*/
+    })
+}
 
 controllers.getCumplimiento_incumplimientos = async (req,res)=>{
     await Cumplimiento_incumplimiento.findAll()
@@ -356,36 +434,6 @@ controllers.getAfectaciones = async (req,res)=>{
 }//getAfectaciones
 
 
-controllers.addMotivo = async(req,res)=>{
-    const _Motivos = {
-        motivo: req.body.motivo
-    };
-
-    Motivos.create(_Motivos)
-    .then(col=>{
-        res.json({ success: true, data: col });
-    })
-    .catch(err=>{
-        console.log("ERROR >:", err);
-            res.json({ success: false, message: err });
-    });
-};
-controllers.addInformante = async(req,res)=>{
-    const _Informantes = {
-        motivo: req.body.motivo
-    };
-
-    Motivos.create(_Informantes)
-    .then(col=>{
-        res.json({ success: true, data: col });
-    })
-    .catch(err=>{
-        console.log("ERROR >:", err);
-            res.json({ success: false, message: err });
-    });
-};
-
-// GET
 controllers.getMotivo = async (req,res)=>{
     await Motivos.findAll()
     .then(obj=>{
@@ -464,7 +512,7 @@ controllers.getFoliosDataBrief = async (req, res)=>{
             },
             tipo:_tipo
         },
-        order:["fecha"] 
+        order:[["fecha","DESC"]] //Las más recientes
     })
     .then(obj=>{
         res.json({success:true, data:obj});
@@ -529,7 +577,10 @@ controllers.getInformante = async (req,res)=>{
 };
 
 
-// DELETE
+/*  ------------------------------
+    ------------DELETE------------
+    ------------------------------
+*/
 controllers.deleteCumplimiento_incumplimiento = async (req,res)=>{
     const idCumIncum = req.params.idCumIncum;
     await Cumplimiento_incumplimiento.destroy({ 
@@ -571,8 +622,6 @@ controllers.borraIncorporacion = async (req,res)=>{
     })
 }
 
-// DELETE
-
 
 controllers.deleteMotivo = async (req,res)=>{
     const id_Motivos = req.params.idMotivo;
@@ -612,6 +661,26 @@ controllers.deleteInformante = async (req,res)=>{
         res.json({success:false, message:err});
     })
 }//borraDesincorporacion
+
+
+/* 
+    Elimina un folio, datos de una incorporacion y sus
+    cumplimeintos e inumpliemntos realacionados.
+*/
+controllers.deleteFolio = async (req,res)=>{
+    const _idFolio = req.params.idFolio;
+    await Desincorporacion.destroy({ 
+        where : {
+            id: _idFolio
+        }
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}
 
 
 module.exports = controllers;
