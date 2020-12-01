@@ -177,6 +177,24 @@ controllers.getEmpresasColisionadas = async(req, res) => {
     });
 }//getEmpresasColisionadas
 
+controllers.getResponsables = async(req, res) => {
+    await DatosSeguroColision.findAll({
+        attributes: [
+          'paga',
+          [db.literal('COUNT(*)'), 'countOfResp']
+        ],
+        group: 'paga'
+    })
+    .then(responsables =>{
+        //console.log("good", responsables);
+        res.json({success: true, data: responsables});
+    })
+    .catch(err=>{
+        //console.log("err", err);
+        res.json({success:false, message:err});
+    });
+}//getResponsables
+
 
 controllers.getAutomovil = async (req,res) =>{
     await DatosAutomovil.findAll({where:{
