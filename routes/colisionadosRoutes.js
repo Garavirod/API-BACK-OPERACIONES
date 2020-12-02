@@ -17,6 +17,7 @@ router.get('/lesionados-list/:idColision',controllers.getLesionados);
 router.get('/economico-list/:idColision',controllers.getEconomicos);
 router.get('/empresa-tiempo/:empresa',controllers.getColEmpresaTiempo);
 router.get('/empresas-colisionadas',controllers.getEmpresasColisionadas);
+router.get('/colisiones-by-year',controllers.getColisionesByYear);
 
 // DELETE
 router.delete('/delete-colision/:idColision',controllers.deleteColision);
