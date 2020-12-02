@@ -4,6 +4,7 @@ const DatosSeguroColision = require('../models/Colisiones/DatosSeguroColision');
 const Lesionado = require('../models/Colisiones/Lesionado');
 const DatosAutomovil = require('../models/Colisiones/DatosAutomovil');
 const EconomicoColisionado = require('../models/Colisiones/EconomicoColisionado');
+const Op =  require("sequelize").Op;
 const controllers = {};
 
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
@@ -239,6 +240,25 @@ controllers.getSeguro = async (req,res) =>{
         res.json({success:false, message:err});
     })
 };
+
+
+/* 
+    Traer todas la colisiones agrupadas por año 
+    y el número total de colisiones en ese año */
+controllers.getColisionesByYear = async (req,res) =>{    
+    await Colision.findAll({        
+        attributes:['fecha',[db.fn('COUNT', db.col('fecha')), 'no_colisions']],
+        // where: db.where(db.fn('YEAR', db.col('fecha')), year),
+        group:[db.fn('YEAR', db.col('fecha'))],        
+
+    })
+    .then(data=>{
+        res.json({success:true, data:data});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    });
+}
 
 // DELETE
 
