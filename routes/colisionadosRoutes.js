@@ -15,7 +15,7 @@ router.get('/automovil-list/:idColision',controllers.getAutomovil);
 router.get('/seguro-list/:idColision',controllers.getSeguro);
 router.get('/lesionados-list/:idColision',controllers.getLesionados);
 router.get('/economico-list/:idColision',controllers.getEconomicos);
-router.get('/empresa-tiempo/:empresa',controllers.getColEmpresaTiempo);
+router.get('/empresa-tiempo/:empresa/:anio',controllers.getColEmpresaTiempo);
 router.get('/empresas-colisionadas',controllers.getEmpresasColisionadas);
 router.get('/responsables-list',controllers.getResponsables);
 router.get('/colisiones-by-year',controllers.getColisionesByYear);

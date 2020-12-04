@@ -140,17 +140,15 @@ controllers.getEconomicos = async(req, res) => {
 
 controllers.getColEmpresaTiempo = async(req, res) => {
 
-    await Colision. findAll({
-        attributes: ['id', 'fecha'],
-        where: {
-            /* podría ir filtro de la fecha */
+    await EconomicoColisionado.findAll({
+        attributes: ['id','empresa'],
+        where:{
+            empresa: req.params.empresa
         },
         include: [{
-            model: EconomicoColisionado,
-            attributes: ['empresa', 'fk_colision'],
-            where: {
-                empresa: req.params.empresa
-            }
+            model: Colision,
+            attributes: ['id', 'fecha'],
+            where: db.where(db.fn('YEAR', db.col('fecha')), req.params.anio)
         }]
     })
     .then(colEmpresa =>{
@@ -158,7 +156,7 @@ controllers.getColEmpresaTiempo = async(req, res) => {
         res.json({success: true, data: colEmpresa});
     })
     .catch(err=>{
-        console.log("err", err);
+        //console.log("err", err);
         res.json({success:false, message:err});
     });
 }//getColEmpresaTiempo

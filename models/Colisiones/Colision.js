@@ -65,6 +65,14 @@ Colision.hasMany(
     }
 );
 
+EconomicoColisionado.belongsTo(
+    Colision,{        
+        foreignKey : 'fk_colision',
+        onDelete:'cascade', 
+        onUpdate:'cascade',
+    }
+);
+
 
 
 module.exports = Colision;
