@@ -227,7 +227,11 @@ controllers.getDatosAmbulancia = async (req,res)=>{
 }
 
 controllers.getEventos = async (req,res)=>{
-    await Evento.findAll()
+    await Evento.findAll({
+        order:[
+            ["id", "DESC"]
+        ]
+    })
     .then(eve=>{
         res.json({success:true, data:eve});
     })
