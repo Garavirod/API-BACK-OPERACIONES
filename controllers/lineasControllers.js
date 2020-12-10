@@ -1,15 +1,16 @@
 const db = require('../config/db');
-const Acumulado_Estacion = require('../models/Acumulado_Estacion');
-const Acumulado_Distancia = require('../models/Acumulados_Distancias');
-const Acumulado = require('../models/Acumulados');
-const Distancia = require('../models/Distancias');
-const Ruta = require('../models/Rutas');
+const Acumulado_Estacion = require('../models/Lineas/Acumulado_Estacion');
+const Acumulado_Distancia = require('../models/Lineas/Acumulados_Distancias');
+const Acumulado = require('../models/Lineas/Acumulados');
+const Distancia = require('../models/Lineas/Distancias');
+const RutaEstacion = require('../models/Lineas/Rutas_Estaciones');
+const Ruta = require('../models/Lineas/Rutas');
 const controllers = {};
 
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
 
-// POST
+////////////////POST////////////////
 controllers.addAcumulado_Estacion = async(req,res)=>{
     const _acumEstacion = {
         idAcum: req.params.idAcum, //FK
@@ -80,6 +81,23 @@ controllers.addDistancia = async(req,res)=>{
     });//create
 };//addDistancia
 
+controllers.addRutaEstaciones = async(req,res)=>{
+    const _rutaEstaciones = {
+        idEstacion: req.body.idEstacion, //FK
+        idRuta: req.params.idRuta //fk
+    };//_rutaEstaciones
+
+    RutaEstacion.create(_rutaEstaciones)
+    .then(col=>{
+        console.log("Ruta successfuly added");
+        res.json({ success: true, data: col });
+    })
+    .catch(err=>{
+        console.log("ERROR >:", err);
+            res.json({ success: false, message: err });
+    });//create
+};//addRutaEstaciones
+
 controllers.addRuta = async(req,res)=>{
     const _ruta = {
         idLinea: req.params.idLinea, //fk
@@ -98,7 +116,7 @@ controllers.addRuta = async(req,res)=>{
     });//create
 };//addRuta
 
-// GET
+////////////////GET////////////////
 controllers.getAcumulado_Estaciones = async (req,res)=>{
     await Acumulado_Estacion.findAll()
     .then(obj=>{
@@ -139,6 +157,16 @@ controllers.getDistancias = async (req,res)=>{
     })
 }//getDistancias
 
+controllers.getRutasEstaciones = async (req,res)=>{
+    await RutaEstacion.findAll()
+    .then(obj=>{
+        res.json({success:true, data:obj});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+}//getRutasEstaciones
+
 controllers.getRutas = async (req,res)=>{
     await Ruta.findAll()
     .then(obj=>{
@@ -149,7 +177,7 @@ controllers.getRutas = async (req,res)=>{
     })
 }//getRutas
 
-// DELETE
+////////////////DELETE////////////////
 controllers.deleteAcumulado_Estacion = async (req,res)=>{
     //which?????????? both?????
     const idCumIncum = req.params.idCumIncum;
@@ -203,6 +231,19 @@ controllers.deleteDistancia = async (req,res)=>{
         res.json({success:false, message:err});
     })
 };//deleteDistancia
+
+controllers.deleteRutaEstacion = async (req,res)=>{
+    const idRutaEstacion = req.params.idRutaEstacion;
+    await RutaEstacion.destroy({ 
+        where : {idRutaEstacion: idRutaEstacion}
+    })
+    .then(()=>{
+        res.json({success:true});
+    })
+    .catch(err=>{
+        res.json({success:false, message:err});
+    })
+};//deleteRutaEstacion
 
 controllers.deleteRuta = async (req,res)=>{
     const idRuta = req.params.idRuta;
