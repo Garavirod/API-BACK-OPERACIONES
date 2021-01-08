@@ -111,17 +111,25 @@ controllers.addAutomovil = async(req,res)=>{
 
 // GET
 controllers.getColisiones = async (req,res)=>{
-    await Colision.findAll({
-        order:[
-            ["id", "DESC"]
-        ] 
-    })
-    .then(obj=>{
-        res.json({success:true, data:obj});
-    })
-    .catch(err=>{
-        res.json({success:false, message:err});
-    })
+    // Parámetros para paginación
+    const limit = parseInt(req.query.limit);
+    const skip = parseInt(req.query.skip);
+    try {
+        const colisions = await Colision.findAll({
+            order:[
+                ["id", "DESC"]
+            ],
+            offset:skip,
+            limit:limit 
+        })
+        res.status(200).json({
+            success:true,
+            colisions:colisions,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success:false});
+    }
 }
 
 controllers.getEconomicos = async(req, res) => {
