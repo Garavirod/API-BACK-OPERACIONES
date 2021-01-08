@@ -5,6 +5,7 @@ const Lesionado = require('../models/Colisiones/Lesionado');
 const DatosAutomovil = require('../models/Colisiones/DatosAutomovil');
 const EconomicoColisionado = require('../models/Colisiones/EconomicoColisionado');
 const Op =  require("sequelize").Op;
+const sequelize = require('../config/db');
 const controllers = {};
 
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
@@ -114,22 +115,35 @@ controllers.getColisiones = async (req,res)=>{
     // Parámetros para paginación
     const limit = parseInt(req.query.limit);
     const skip = parseInt(req.query.skip);
-    try {
-        const colisions = await Colision.findAll({
+    let rows = 0;
+    if(skip === 0){
+        rows = await Colision.findAll({
+            attributes: [            
+                [db.literal('COUNT(*)'), 'rows']
+            ]         
+        })
+    }
+    
+    await Colision.findAll({
             order:[
                 ["id", "DESC"]
             ],
             offset:skip,
             limit:limit 
-        })
+    })
+    .then(col=>{
         res.status(200).json({
             success:true,
-            colisions:colisions,
+            data:col,
+            rows:rows
         });
-    } catch (error) {
+    })
+    .catch (error=>{
         console.log(error);
         res.status(500).json({success:false});
-    }
+
+    });
+    
 }
 
 controllers.getEconomicos = async(req, res) => {
