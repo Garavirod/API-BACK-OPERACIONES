@@ -131,7 +131,7 @@ controllers.getColisiones = async (req,res)=>{
             offset:skip,
             limit:limit 
     })
-    .then(col=>{
+    .then(col=>{        
         res.status(200).json({
             success:true,
             data:col,
