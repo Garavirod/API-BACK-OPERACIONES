@@ -227,17 +227,28 @@ controllers.getDatosAmbulancia = async (req,res)=>{
 }
 
 controllers.getEventos = async (req,res)=>{
+    // Parámetros para paginación
+    const limit = parseInt(req.query.limit);
+    const skip = parseInt(req.query.skip);
+
     await Evento.findAll({
         order:[
-            ["id", "DESC"]
-        ]
+            ["id", "DESC"],            
+        ],
+        offset:skip,
+        limit:limit 
     })
-    .then(eve=>{
-        res.json({success:true, data:eve});
+    .then(col=>{        
+        res.status(200).json({
+            success:true,
+            data:col            
+        });
     })
-    .catch(err=>{
-        res.json({success:false, message:err});
-    })
+    .catch (error=>{
+        console.log(error);
+        res.status(500).json({success:false});
+
+    });
 }
 
 controllers.borraEvento = async (req,res)=>{
