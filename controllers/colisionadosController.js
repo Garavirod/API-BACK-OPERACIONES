@@ -113,29 +113,22 @@ controllers.addAutomovil = async(req,res)=>{
 // GET
 controllers.getColisiones = async (req,res)=>{
     // Parámetros para paginación
-    const limit = parseInt(req.query.limit);
-    const skip = parseInt(req.query.skip);
-    let rows = 0;
-    if(skip === 0){
-        rows = await Colision.findAll({
-            attributes: [            
-                [db.literal('COUNT(*)'), 'rows']
-            ]         
-        })
-    }
-    
-    await Colision.findAll({
-            order:[
-                ["id", "DESC"]
-            ],
-            offset:skip,
-            limit:limit 
+    const maxElements = parseInt(req.query.max);
+    const pgNumber = parseInt(req.query.page);
+    const skip = (pgNumber - 1) * maxElements;
+
+    await Colision.findAndCountAll({
+        order:[
+            ["id", "DESC"]
+        ],
+        offset:skip,
+        limit:maxElements 
     })
-    .then(col=>{        
+    .then(result=>{      
         res.status(200).json({
             success:true,
-            data:col,
-            rows:rows
+            data:result.rows,
+            count:result.count
         });
     })
     .catch (error=>{
@@ -144,7 +137,7 @@ controllers.getColisiones = async (req,res)=>{
 
     });
     
-}
+}//getColisiones
 
 controllers.getEconomicos = async(req, res) => {
     await EconomicoColisionado. findAll({
