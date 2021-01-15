@@ -228,20 +228,22 @@ controllers.getDatosAmbulancia = async (req,res)=>{
 
 controllers.getEventos = async (req,res)=>{
     // Parámetros para paginación
-    const limit = parseInt(req.query.limit);
-    const skip = parseInt(req.query.skip);
+    const maxElements = parseInt(req.query.max);
+    const pgNumber = parseInt(req.query.page);
+    const skip = (pgNumber - 1) * maxElements;
 
-    await Evento.findAll({
+    await Evento.findAndCountAll({
         order:[
             ["id", "DESC"],            
         ],
         offset:skip,
-        limit:limit 
+        limit:maxElements 
     })
-    .then(col=>{        
+    .then(result=>{        
         res.status(200).json({
             success:true,
-            data:col            
+            data:result.rows,
+            count:result.count       
         });
     })
     .catch (error=>{
@@ -249,7 +251,7 @@ controllers.getEventos = async (req,res)=>{
         res.status(500).json({success:false});
 
     });
-}
+}//getEventos
 
 controllers.borraEvento = async (req,res)=>{
     const id_event = req.params.idEvento;
