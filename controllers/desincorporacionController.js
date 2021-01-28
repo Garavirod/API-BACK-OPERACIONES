@@ -23,58 +23,110 @@ Desincorporacion.drop();*/
 /* Afectacion is added inmediately after the Cumplimiento_Incumplimiento is added,
 since it's idCumplimiento_Incumplimiento is needed for the Afectacion*/
 controllers.addAfectacion = async(req,res)=>{
-    const desincorporacion = {  
-        fecha: req.body.fecha,
-        hora: req.body.hora,
-        linea: req.body.linea,
-        estacion: req.body.estacion,
-        solicita: req.body.solicita,
-        informa: req.body.informa,
-        empresa: req.body.empresa,
-        economico: req.body.economico,
-        motivo: req.body.motivo,
-        odometro: req.body.odometro,
-        credencial: req.body.credencial,
-        nombre: req.body.nombre,
-        jornada: req.body.jornada,
-        observaciones: req.body.observaciones,
-        tipo: req.body.tipo,
-        edoFolio: req.body.edoFolio,
+    const [desincorporacion, valRef1] = req.body;
+    const _desincorporacion = {  
+        fecha: desincorporacion.fecha,
+        hora: desincorporacion.hora,
+        linea: desincorporacion.linea,
+        estacion: desincorporacion.estacion,
+        solicita: desincorporacion.solicita,
+        informa: desincorporacion.informa,
+        empresa: desincorporacion.empresa,
+        economico: desincorporacion.economico,
+        motivo: desincorporacion.motivo,
+        odometro: desincorporacion.odometro,
+        credencial: desincorporacion.credencial,
+        nombre: desincorporacion.nombre,
+        jornada: desincorporacion.jornada,
+        observaciones: desincorporacion.observaciones,
+        tipo: desincorporacion.tipo,
+        edoFolio: desincorporacion.edoFolio,
     };
 
     const _cumpIncum = {
         //idDesincorporacion: req.params.idDesincorporacion,
-        ruta_referencia: req.body.ruta_referencia,
-        ref_ida: req.body.ref_ida,
-        /*se quitó
-        vuelta: req.body.ref_vuelta,*/
-        num_vuelta:req.body.num_vuelta,
-        num_ida: req.body.num_ida,
-        num_regreso:req.body.num_regreso,
-        tramo_desde: req.body.tramo_desde,
-        tramo_hasta: req.body.tramo_hasta,
-        kilometraje: req.body.kilometraje,
-        tipo: req.body.tipo
+        ruta_referencia:valRef1.ruta_referencia,
+        ref_ida:valRef1.ref_ida,
+        num_vuelta:valRef1.num_vuelta,
+        num_ida:valRef1.num_ida,
+        num_regreso:valRef1.num_regreso,
+        tramo_desde:valRef1.tramo_desde,
+        tramo_hasta:valRef1.tramo_hasta,
+        kilometraje:valRef1.kilometraje,
+        tipo: valRef1.tipo
     };//_cumpIncum
     
-    Desincorporacion.create(desincorporacion)
-        .then(des => {
-            des.createCumplimiento_Incumplimiento(_cumpIncum)
-            .then(cum =>{
-                const _afectacion = {
-                    kilometraje: req.body.kilometraje
-                }
-                cum.createAfectacion(_afectacion).then(af =>{
-                    res.json({ success: true, data: des });
-                });
+    Desincorporacion.create(_desincorporacion)
+    .then(des => {
+        des.createCumplimiento_Incumplimiento(_cumpIncum)
+        .then(cum =>{
+            const _afectacion = {
+                kilometraje: valRef1.kilometraje
+            }
+            cum.createAfectacion(_afectacion).then(af =>{
+                res.json({ success: true, data: des });
             });
-        })
-        .catch(err => {
-            console.log("ERROR >:", err);
-            res.json({ success: false, message: err });
-        })
+        });
+    })
+    .catch(err => {
+        console.log("ERROR >:", err);
+        res.json({ success: false, message: err });
+    })
 
 };//addAfectacion
+
+
+/* Update afectación */
+controllers.updateAfectacionSimple = async (req, res) => {
+    const _idfolio = req.params.idFolio;
+    const _afectacionFolio = await Desincorporacion.findOne({where:{id:_idfolio}});
+    const [desincorporacion, valRef1] = req.body;
+
+    /* Data structure */
+    const _desincorporacion = {  
+        fecha: desincorporacion.fecha,
+        hora: desincorporacion.hora,
+        linea: desincorporacion.linea,
+        estacion: desincorporacion.estacion,
+        solicita: desincorporacion.solicita,
+        informa: desincorporacion.informa,
+        empresa: desincorporacion.empresa,
+        economico: desincorporacion.economico,
+        motivo: desincorporacion.motivo,
+        odometro: desincorporacion.odometro,
+        credencial: desincorporacion.credencial,
+        nombre: desincorporacion.nombre,
+        jornada: desincorporacion.jornada,
+        observaciones: desincorporacion.observaciones,
+        tipo: desincorporacion.tipo,
+        edoFolio: desincorporacion.edoFolio,
+    };
+
+    const _cumpIncum = {
+        //idDesincorporacion: req.params.idDesincorporacion,
+        ruta_referencia:valRef1.ruta_referencia,
+        ref_ida:valRef1.ref_ida,
+        num_vuelta:valRef1.num_vuelta,
+        num_ida:valRef1.num_ida,
+        num_regreso:valRef1.num_regreso,
+        tramo_desde:valRef1.tramo_desde,
+        tramo_hasta:valRef1.tramo_hasta,
+        kilometraje:valRef1.kilometraje,
+        tipo: valRef1.tipo
+    };//_cumpIncum
+
+    _afectacionFolio.update(_desincorporacion)
+    .then(afe=>{          
+        Cumplimiento_incumplimiento.update(_cumpIncum,{where:{idDesincorporacion:_idfolio}})                         
+        .then(() =>{           
+            res.json({ success: true, data: afe });
+        })       
+    })
+    .catch(err=>{        
+        res.json({ success: false, message:"Error on save! >:"+err });
+    });
+
+};
 
 // Este controlador V2 agrega una afecatacion cuadno hay cumlimientos e incumplimientos
 controllers.addAfectacion2 = async(req,res)=>{
@@ -122,31 +174,103 @@ controllers.addAfectacion2 = async(req,res)=>{
     };//_cumpIncum
 
     Desincorporacion.create(_desincorporacion)
-        .then(des => {
-            des.createCumplimiento_Incumplimiento(_cumpIncum1)
-            .then(cum =>{
-                const _afectacion = {
-                    kilometraje: _cumpIncum1.kilometraje
-                }
-                cum.createAfectacion(_afectacion);
-            des.createCumplimiento_Incumplimiento(_cumpIncum2)
-            .then(cum2 =>{
-                const _afectacion = {
-                    kilometraje: _cumpIncum2.kilometraje
-                }
-                cum2.createAfectacion(_afectacion).then(af =>{
-                    res.json({ success: true, data: af });
-                });
+    .then(des => {
+        des.createCumplimiento_Incumplimiento(_cumpIncum1)
+        .then(cum =>{
+            const _afectacion = {
+                kilometraje: _cumpIncum1.kilometraje
+            }
+            cum.createAfectacion(_afectacion);
+        des.createCumplimiento_Incumplimiento(_cumpIncum2)
+        .then(cum2 =>{
+            const _afectacion = {
+                kilometraje: _cumpIncum2.kilometraje
+            }
+            cum2.createAfectacion(_afectacion).then(af =>{
+                res.json({ success: true, data: af });
             });
-            });
-        })
-        .catch(err => {
-            console.log("ERROR >:", err);
-            res.json({ success: false, message: err });
-        })
-
+        });
+        });
+    })
+    .catch(err => {
+        console.log("ERROR >:", err);
+        res.json({ success: false, message: err });
+    })
 };//addAfectacion2
 
+/* Update afectación compuesta (apoyo e incumplimiento) */
+
+controllers.updateAfectacionCompuesta = async (req,res) => {
+    const _idR1 = parseInt(req.query.idR1);
+    const _idR2 = parseInt(req.query.idR2);
+    const _idfolio = parseInt(req.query.idFolio);
+    const _afectacionFolio = await Desincorporacion.findOne({where:{id:_idfolio}});
+    const [desincorporacion, valRef1, valRef2] = req.body;
+    /* Data structure */
+    const _desincorporacion = {  
+        fecha: desincorporacion.fecha,
+        hora: desincorporacion.hora,
+        linea: desincorporacion.linea,
+        estacion: desincorporacion.estacion,
+        solicita: desincorporacion.solicita,
+        informa: desincorporacion.informa,
+        empresa: desincorporacion.empresa,
+        economico: desincorporacion.economico,
+        motivo: desincorporacion.motivo,
+        odometro: desincorporacion.odometro,
+        credencial: desincorporacion.credencial,
+        nombre: desincorporacion.nombre,
+        jornada: desincorporacion.jornada,
+        observaciones: desincorporacion.observaciones,
+        tipo: desincorporacion.tipo,
+        edoFolio: desincorporacion.edoFolio,
+    };
+    const _cumpIncum1 = {
+        ruta_referencia: valRef1.ruta_referencia,
+        ref_ida: valRef1.ref_ida,
+        num_vuelta:valRef1.num_vuelta,
+        num_ida: valRef1.num_ida,
+        num_regreso:valRef1.num_regreso,
+        tramo_desde: valRef1.tramo_desde,
+        tramo_hasta: valRef1.tramo_hasta,
+        kilometraje: valRef1.kilometraje,
+        tipo: valRef1.tipo
+    };//_cumpIncum
+    const _cumpIncum2 = {
+        ruta_referencia: valRef2.ruta_referencia,
+        ref_ida: valRef2.ref_ida,
+        num_vuelta:valRef2.num_vuelta,
+        num_ida: valRef2.num_ida,
+        num_regreso:valRef2.num_regreso,
+        tramo_desde: valRef2.tramo_desde,
+        tramo_hasta: valRef2.tramo_hasta,
+        kilometraje: valRef2.kilometraje,
+        tipo: valRef2.tipo
+    };//_cumpIncum
+
+    _afectacionFolio.update(_desincorporacion)
+    .then((af) => {  
+        Cumplimiento_incumplimiento.update(_cumpIncum1,{where:{id:_idR1}})
+        .then(async () =>{    
+            const R2 = await Cumplimiento_incumplimiento.findOne({where:{id:_idR2}})        
+            if (R2) {
+                R2.update(_cumpIncum2)
+                .then(() =>{               
+                  res.json({ success: true, data: af });                
+                });                
+            }else{
+                af.createCumplimiento_Incumplimiento(_cumpIncum2)
+                .then( () =>{
+                    res.json({ success: true, data: af });                   
+                });
+            }
+        });
+    })
+    .catch(err => {
+        console.log("ERROR >:", err);
+        res.json({ success: false, message: err });
+    })
+}
 
 
 controllers.registroDesincorporacion = async (req, res) => {    

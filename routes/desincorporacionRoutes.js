@@ -13,6 +13,8 @@ router.post('/datos-motivo',controllers.addMotivo);
 router.post('/datos-informante',controllers.addInformante);
 router.post('/update-folio-cumpinc/:idFolio',controllers.updateFolioIncumOrApoyo);
 router.post('/update-desincorporacion',controller.updateDesincorporacion);
+router.post('/update-afectacion-simple/:idFolio',controllers.updateAfectacionSimple);
+router.post('/update-afectacion-compuesta',controllers.updateAfectacionCompuesta);
 
 
 // GET
