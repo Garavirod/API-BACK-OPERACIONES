@@ -19,7 +19,9 @@ controllers.addColision = async(req,res)=>{
         interseccion: req.body.interseccion,
         colonia : req.body.colonia,
         fecha:req.body.fecha,
-        hora: req.body.hora 
+        hora: req.body.hora,
+        longitud: req.body.longitud,
+        latitud: req.body.latitud,
     };
 
     Colision.create(_colision)

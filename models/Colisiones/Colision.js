@@ -30,8 +30,14 @@ const Colision = db.define('Colision',{
         defaultValue: sequelize.NOW
     },
     hora :{
-        type:sequelize.TIME,
+        type: sequelize.TIME,
         //defaultValue: sequelize.NOW
+    },
+    longitud :{
+        type: sequelize.DOUBLE,
+    },
+    latitud :{
+        type: sequelize.DOUBLE,
     },
 });
 
