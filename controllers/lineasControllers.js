@@ -103,17 +103,28 @@ controllers.addRuta = async(req,res)=>{
 // GET
 controllers.getAllLineas = async (req,res) => {
     try { 
-        await lineasDB.query("SELECT nombre_li FROM lineas")
+        await lineasDB.query("SELECT * FROM lineas")
         .then(([lineas, metadata]) => {
-            const linWithoutMeta = lineas.map(linea => linea.nombre_li);
-            res.json({success:true, data:linWithoutMeta});
+            res.json({success:true, data:lineas});
         })
     } catch (error) {
         console.log(error);
         res.json({success:false, message:error});
     }
-
 }//getAllLineas
+
+controllers.getEstacionesByLinea = async (req,res) => {
+    const idLinea = req.params.idLinea;
+    try { 
+        await lineasDB.query(`SELECT Id_estacion, nombre_es FROM estacioneslineas el INNER JOIN estaciones e ON e.Id_estacion=el.estacion_id WHERE el.linea_id='${idLinea}'`)
+        .then(([estaciones, metadata]) => {
+            res.json({success:true, data:estaciones});
+        })
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error});
+    }
+}//getEstacionesByLinea
 
 /*controllers.getAcumulado_Estaciones = async (req,res)=>{
     await Acumulado_Estacion.findAll()
