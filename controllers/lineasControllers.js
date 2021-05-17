@@ -1,16 +1,18 @@
 const db = require('../config/db');
-const Acumulado_Estacion = require('../models/Acumulado_Estacion');
+/*const Acumulado_Estacion = require('../models/Acumulado_Estacion');
 const Acumulado_Distancia = require('../models/Acumulados_Distancias');
 const Acumulado = require('../models/Acumulados');
 const Distancia = require('../models/Distancias');
-const Ruta = require('../models/Rutas');
+const Ruta = require('../models/Rutas');*/
+const lineasDB = require('../config/lineasDB');
 const controllers = {};
 
 //Borra los datos y tablas al correr el server siempre y caundo sync este en true
 db.sync({force:false});
+lineasDB.sync({force:false});
 
 // POST
-controllers.addAcumulado_Estacion = async(req,res)=>{
+/*controllers.addAcumulado_Estacion = async(req,res)=>{
     const _acumEstacion = {
         idAcum: req.params.idAcum, //FK
         idEstacion: req.body.idEstacion //FK
@@ -96,10 +98,24 @@ controllers.addRuta = async(req,res)=>{
         console.log("ERROR >:", err);
             res.json({ success: false, message: err });
     });//create
-};//addRuta
+};//addRuta*/
 
 // GET
-controllers.getAcumulado_Estaciones = async (req,res)=>{
+controllers.getAllLineas = async (req,res) => {
+    try { 
+        await lineasDB.query("SELECT nombre_li FROM lineas")
+        .then(([lineas, metadata]) => {
+            const linWithoutMeta = lineas.map(linea => linea.nombre_li);
+            res.json({success:true, data:linWithoutMeta});
+        })
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error});
+    }
+
+}//getAllLineas
+
+/*controllers.getAcumulado_Estaciones = async (req,res)=>{
     await Acumulado_Estacion.findAll()
     .then(obj=>{
         res.json({success:true, data:obj});
@@ -215,6 +231,6 @@ controllers.deleteRuta = async (req,res)=>{
     .catch(err=>{
         res.json({success:false, message:err});
     })
-};//deleteRuta
+};//deleteRuta*/
 
 module.exports = controllers;
